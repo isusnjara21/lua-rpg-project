@@ -18,10 +18,6 @@ function App:load()
     self:change_scene(self.ref.scenes["test"])
 
     self.__dt_accumulator = 0
-
-    for node, mod in app:activeModule_iterator() do
-        mod:onLoad()
-    end
 end
 
 function App:update(dt)
@@ -32,21 +28,15 @@ function App:update(dt)
     -- FIXED UPDATES
     self.__dt_accumulator = self.__dt_accumulator + dt
     while self.__dt_accumulator >= self.fixedDeltaTime do
-        for node, mod in app:activeModule_iterator() do
-            mod:onFixedUpdate(self.fixedDeltaTime)
-        end
+        self.ACTIVE_SCENE:fixedUpdate()
         self.__dt_accumulator = self.__dt_accumulator - self.fixedDeltaTime
     end
 
     -- NORMAL UPDATES
-    for node, mod in app:activeModule_iterator() do
-        mod:onUpdate(dt)
-    end
+    self.ACTIVE_SCENE:update(dt)
 
     -- LATE UPDATES
-    for node, mod in app:activeModule_iterator() do
-        mod:onLateUpdate(dt)
-    end
+    self.ACTIVE_SCENE:lateUpdate(dt)
 end
 
 function App:input_press(key)
@@ -64,58 +54,12 @@ function App:change_scene(__scene)
     app.camera.Transform.position:set(self.ACTIVE_SCENE.initial_camera_position.x, self.ACTIVE_SCENE.initial_camera_position.y, self.ACTIVE_SCENE.initial_camera_position.z)
     app.camera.Transform.rotation = 0
 
-    for node, mod in app:activeModule_iterator() do
-        mod:onLoad() 
-    end
-
     -- NORMAL SPRITES
-    for node in app:activeNode_iterator() do
+    for node in self.ACTIVE_SCENE:activeNode_iterator() do
         if node:getModules().SpriteRenderer then
             self.RENDERER:push(node)
         end
     end
 end
 
-function App:activeNode_iterator()
-    local index = #self.ACTIVE_SCENE.nodes + 1
-    return function()
-        index = index - 1
-        if index >= 1 then
-            return self.ACTIVE_SCENE.nodes[index]
-        end
-    end
-end
 
-function App:activeModule_iterator()
-    local node_iter = self:activeNode_iterator()
-    local current_node = nil
-    local modules = nil
-    local mod_keys = nil
-    local mod_index = 0
-
-    return function()
-        repeat
-            if not modules then
-                current_node = node_iter()
-                if not current_node then
-                    return
-                end
-                modules = current_node:getModules()
-                mod_keys = {}
-                for k in pairs(modules) do
-                    table.insert(mod_keys, k)
-                end
-                mod_index = 1
-            end
-
-            local key = mod_keys[mod_index]
-            mod_index = mod_index + 1
-
-            if key then
-                return current_node, modules[key]
-            else
-                modules = nil
-            end
-        until false
-    end
-end

@@ -1,6 +1,6 @@
 testScene = Scene:extend()
 
-function testScene:load()
+function testScene:create()
     
     local aaa = app.ref.nodes.Sprite()
     aaa.SpriteRenderer:fromData(app.ref.sprites.Player)
