@@ -1,0 +1,38 @@
+require "lib.class.Object"
+require "lib.class.Generic"
+require "lib.struct.Vector"
+require "lib.struct.Vector3"
+require "common.util.HelperFunctions"
+require "common.util.Logger"
+require "engine.App"
+require "common.Global"
+
+function love.load()
+    app.stdout = ''
+
+    app:load()
+end
+
+function love.update(dt)
+    app.stdout = ''
+
+    local w, h = love.graphics.getDimensions()
+    app.screen:set(w, h)
+
+    app:update(dt)
+end
+
+function love.draw()
+    app.RENDERER:draw_call()
+
+    -- standard output // for debugging purposes
+    love.graphics.printf(app.stdout, 1, 1, 500, "left")
+end
+
+function love.keypressed(key)
+    app:input_press(key)
+end
+
+function love.keyreleased(key)
+    app:input_release(key)
+end
