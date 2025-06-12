@@ -12,6 +12,12 @@ end
 function Module:onKeyDown(event)
 end
 
+function Module:onKeyUp(event)
+end
+
+function Module:onUpdate(deltaTime)
+end
+
 function Module:onFixedUpdate(fixedDeltaTime)
 end
 
