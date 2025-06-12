@@ -40,34 +40,8 @@ function testScene:create()
 
     self:putNode(empty2)
 
-    local tilemap = app.ref.nodes.Sprite()
-
-    local imgbuf = {
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path),
-        love.graphics.newImage(app.ref.sprites.Player.path)
-    }
-
-    local posbuf = {
-        vec(0, 0),
-        vec(16, 0),
-        vec(32, 0),
-        vec(0, 16),
-        vec(16, 16),
-        vec(32, 16),
-        vec(0, 32),
-        vec(16, 32),
-        vec(32, 32)
-    }
-
-    tilemap.SpriteRenderer:setDirty(app.IMAGE:join(imgbuf, posbuf))
-    tilemap.SpriteRenderer.z_index = -1
+    local tilemap = app.ref.nodes.TileMap()
+    tilemap.TileMapBuilder:loadData("")
     tilemap.Transform.position:set(10, 10)
 
     self:putNode(tilemap)

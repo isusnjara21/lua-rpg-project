@@ -1,15 +1,7 @@
 function TileMapNode()
     local obj = app.ref.nodes.Sprite()
-
-    obj.map = {}
-    obj.reference = {}
-
-    function obj:loadMap()
-    end
-
-    function obj:create()
-    end
-
+    obj:setModule(app.ref.modules.TileMapBuilder())
+    obj.TileMapBuilder = obj.modules.TileMapBuilder
     return obj
 end
 

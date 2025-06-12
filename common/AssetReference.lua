@@ -10,6 +10,7 @@ function asset_ref:create_references()
         Transform = require("common.modules.Transform"),
         SpriteRenderer = require("common.modules.SpriteRenderer"),
         Collider = require("common.modules.Collider"),
+        TileMapBuilder = require("common.modules.TileMapBuilder"),
 
         test = require("game.testModule"),
         testCam = require("game.testCamModule"),
@@ -18,6 +19,7 @@ function asset_ref:create_references()
     -- NODES
     self.nodes = {
         Sprite = require("common.nodes.Sprite"),
+        TileMap = require("common.nodes.TileMap")
     }
 
     -- SCENES -- WIP
