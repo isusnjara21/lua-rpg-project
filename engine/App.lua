@@ -24,6 +24,8 @@ end
 function App:update(deltaTime)
     self.TIME:__set(deltaTime)
 
+    self.mouse:set(love.mouse.getPosition())
+
     Logger.log(love.timer.getFPS())
 
     self.CONTROLLER:update()

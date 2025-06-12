@@ -9,6 +9,8 @@ function App:global()
     self.TIME = Time()
     self.IMAGE = Image()
 
+    self.mouse = vec(0, 0)
+
     local w, h = love.graphics.getDimensions()
     self.screen = vec(w, h)
 

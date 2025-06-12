@@ -1,6 +1,6 @@
 testCamera = Module:extend()
 
-function testCamera:onUpdate(dt)
+function testCamera:onLateUpdate(dt)
     if self.node and self.node.modules.Transform then
         local x = self.node.modules.Transform.position.x
         local y = self.node.modules.Transform.position.y

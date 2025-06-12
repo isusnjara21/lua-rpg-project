@@ -37,3 +37,9 @@ end
 function love.keyreleased(key)
     app:input_release(key)
 end
+
+function love.mousepressed()
+end
+
+function love.mousereleased()
+end
