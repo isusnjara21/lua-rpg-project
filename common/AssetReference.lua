@@ -1,5 +1,3 @@
-require "game.testScene"
-
 asset_ref = Object:extend()
 
 function asset_ref:init()
@@ -23,8 +21,9 @@ function asset_ref:create_references()
     }
 
     -- SCENES -- WIP
-    self.scenes = {}
-    self.scenes["test"] = testScene
+    self.scenes = {
+        test = require("game.testScene")
+    }
 
     -- SPRITES
     self.sprites = {

@@ -16,13 +16,13 @@ function App:load()
     self.CONTROLLER = Controller()
     self.ACTIVE_SCENE = {}
 
-    self:change_scene(self.ref.scenes["test"])
+    self:change_scene(self.ref.scenes.test)
 
     self.__dt_accumulator = 0
 end
 
 function App:update(deltaTime)
-    self.TIME:set(deltaTime)
+    self.TIME:__set(deltaTime)
 
     Logger.log(love.timer.getFPS())
 

@@ -13,30 +13,33 @@ end
 
 function Scene:putNode(node)
     Generic.assertType(node, Node)
+    if node.parent ~= nil then
+        error("Can only putNode with root Nodes that dont have a parent")
+    end
     table.insert(self.nodes, node)
 end
 
 function Scene:load()
-    for node, mod in self:activeModule_iterator() do
-        mod:onLoad() 
+    for node in self:activeNode_iterator() do
+        node:load(dt)
     end
 end
 
 function Scene:update(dt)
-    for node, mod in self:activeModule_iterator() do
-        mod:onUpdate(dt)
+    for node in self:activeNode_iterator() do
+        node:update(dt)
     end
 end
 
 function Scene:fixedUpdate(dt)
-    for node, mod in self:activeModule_iterator() do
-        mod:onFixedUpdate(dt)
+    for node in self:activeNode_iterator() do
+        node:fixedUpdate(dt)
     end
 end
 
 function Scene:lateUpdate(dt)
-    for node, mod in self:activeModule_iterator() do
-        mod:onLateUpdate(dt)
+    for node in self:activeNode_iterator() do
+        node:lateUpdate(dt)
     end
 end
 

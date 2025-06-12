@@ -38,7 +38,7 @@ function test:onInput(event)
     elseif event == "e" then
         self.rotate = self.rotate - self.rot_speed
     elseif event == "r" then
-        app:change_scene(app.ref.scenes["test"])
+        app:change_scene(app.ref.scenes.test)
     elseif event == "k" then
         app.TIME:set_scale(app.TIME.time_scale + 0.01)
     elseif event == "j" then

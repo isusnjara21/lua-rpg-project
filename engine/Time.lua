@@ -6,7 +6,7 @@ function Time:init()
     self.deltaTime = 0
 end
 
-function Time:set(dt)
+function Time:__set(dt)
     self.deltaTime = dt
 end
 

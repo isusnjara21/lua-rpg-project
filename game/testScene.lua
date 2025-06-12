@@ -40,3 +40,5 @@ function testScene:create()
 
     self:putNode(empty2)  
 end
+
+return testScene
