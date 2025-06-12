@@ -22,7 +22,7 @@ function testScene:create()
     empty:setModule(app.ref.modules.SpriteRenderer())
     empty.SpriteRenderer = empty.modules.SpriteRenderer
 
-    empty.position:set(150, 150)
+    empty.Transform:setWorldPosition(16*3, 16*3)
     empty.scale:set(10, 10)
     empty.Transform:setRotation(2)
 

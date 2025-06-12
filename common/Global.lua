@@ -4,6 +4,8 @@ function App:global()
     self.__VERSION = "0.0.1"
 
     self.ref = asset_ref()
+
+    -- Size per pixel
     self.global_scale = 5
 
     self.TIME = Time()

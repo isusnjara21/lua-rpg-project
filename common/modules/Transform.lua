@@ -46,6 +46,17 @@ function Transform:scale(x, y)
     self.scale.y = self.scale.y + ly
 end
 
+-- 1 world unit is 1 sprite pixel of a sprite that hasnt had its scale tampered with
+function Transform:setWorldPosition(x, y)
+    local lx = x or 0
+    local ly = y or 0
+    Generic.assertType(lx, "number")
+    Generic.assertType(ly, "number")
+
+    self.position.x = lx * app.global_scale
+    self.position.y = ly * app.global_scale
+end
+
 --[[
     MANDATORY IMPLEMENTATION!!!!
     Ensures being able to access other modules of a node
