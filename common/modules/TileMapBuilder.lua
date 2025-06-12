@@ -2,9 +2,9 @@ TileMapBuilder = Module:extend()
 
 function TileMapBuilder:init()
     self.path = ""
-    self.data = nil
-    self.map = nil
-    self.reference = nil
+    self.data = {}
+    self.map = {}
+    self.reference = {}
 end
 
 function TileMapBuilder:onLoad()
