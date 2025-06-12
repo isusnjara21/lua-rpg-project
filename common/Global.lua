@@ -4,8 +4,9 @@ function App:global()
     self.__VERSION = "0.0.1"
 
     self.ref = asset_ref()
-    self.fixedDeltaTime = 1/60
     self.global_scale = 5
+
+    self.TIME = Time()
 
     local w, h = love.graphics.getDimensions()
     self.screen = vec(w, h)

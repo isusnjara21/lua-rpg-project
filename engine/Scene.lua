@@ -28,9 +28,9 @@ function Scene:update(dt)
     end
 end
 
-function Scene:fixedUpdate()
+function Scene:fixedUpdate(dt)
     for node, mod in self:activeModule_iterator() do
-        mod:onFixedUpdate(app.fixedDeltaTime)
+        mod:onFixedUpdate(dt)
     end
 end
 

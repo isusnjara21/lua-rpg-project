@@ -9,7 +9,7 @@ end
 function Module:onInput(event)
 end
 
-function Module:onUpdate(deltaTime)
+function Module:onKeyDown(event)
 end
 
 function Module:onFixedUpdate(fixedDeltaTime)

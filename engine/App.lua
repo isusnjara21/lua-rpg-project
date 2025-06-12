@@ -3,6 +3,7 @@ require "engine.Renderer"
 require "engine.Node"
 require "engine.Scene"
 require "engine.Module"
+require "engine.Time"
 
 App = Object:extend()
 
@@ -20,23 +21,25 @@ function App:load()
     self.__dt_accumulator = 0
 end
 
-function App:update(dt)
+function App:update(deltaTime)
+    self.TIME:set(deltaTime)
+
     Logger.log(love.timer.getFPS())
 
     self.CONTROLLER:update()
 
     -- FIXED UPDATES
-    self.__dt_accumulator = self.__dt_accumulator + dt
-    while self.__dt_accumulator >= self.fixedDeltaTime do
-        self.ACTIVE_SCENE:fixedUpdate()
-        self.__dt_accumulator = self.__dt_accumulator - self.fixedDeltaTime
+    self.__dt_accumulator = self.__dt_accumulator + self.TIME:get_raw() -- idk about this, 
+    while self.__dt_accumulator >= self.TIME.fixedDeltaTime do
+        self.ACTIVE_SCENE:fixedUpdate(self.TIME.fixedDeltaTime)
+        self.__dt_accumulator = self.__dt_accumulator - self.TIME.fixedDeltaTime
     end
 
     -- NORMAL UPDATES
-    self.ACTIVE_SCENE:update(dt)
+    self.ACTIVE_SCENE:update(self.TIME:get())
 
     -- LATE UPDATES
-    self.ACTIVE_SCENE:lateUpdate(dt)
+    self.ACTIVE_SCENE:lateUpdate(self.TIME:get())
 end
 
 function App:input_press(key)
