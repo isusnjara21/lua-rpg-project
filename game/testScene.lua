@@ -1,19 +1,18 @@
 testScene = Scene:extend()
 
 function testScene:create()
-    
     local aaa = app.ref.nodes.Sprite()
     aaa.SpriteRenderer:fromData(app.ref.sprites.Player)
     aaa.position:set(300, 300)
     self:putNode(aaa)
 
     local player = app.ref.nodes.Sprite()
-    
+
     player.SpriteRenderer:fromData(app.ref.sprites.Player)
 
     player:setModule(app.ref.modules.test())
     player:setModule(app.ref.modules.testCam())
-    
+
     player.SpriteRenderer.z_index = 1
     self:putNode(player)
 
@@ -28,7 +27,7 @@ function testScene:create()
     empty.Transform:setRotation(2)
 
     self:putNode(empty)
-    
+
     local empty2 = Node()
     empty2:setModule(app.ref.modules.Transform())
     util.TransformAlias(empty2)
@@ -39,7 +38,39 @@ function testScene:create()
     empty2.scale:set(10, 10)
     empty2.Transform:setRotation(0.7)
 
-    self:putNode(empty2)  
+    self:putNode(empty2)
+
+    local tilemap = app.ref.nodes.Sprite()
+
+    local imgbuf = {
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path),
+        love.graphics.newImage(app.ref.sprites.Player.path)
+    }
+
+    local posbuf = {
+        vec(0, 0),
+        vec(16, 0),
+        vec(32, 0),
+        vec(0, 16),
+        vec(16, 16),
+        vec(32, 16),
+        vec(0, 32),
+        vec(16, 32),
+        vec(32, 32)
+    }
+
+    tilemap.SpriteRenderer:setDirty(app.IMAGE:join(imgbuf, posbuf))
+    tilemap.SpriteRenderer.z_index = -1
+    tilemap.Transform.position:set(10, 10)
+
+    self:putNode(tilemap)
 end
 
 return testScene

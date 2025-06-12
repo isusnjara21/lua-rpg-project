@@ -39,22 +39,6 @@ function Vector:rotate(angle)
     self.y = x * sinA + y * cosA
 end
 
-function Vector.LEFT()
-    return vec(-1, 0)
-end
-
-function Vector.RIGHT()
-    return vec(1, 0)
-end
-
-function Vector.UP()
-    return vec(0, -1)
-end
-
-function Vector.DOWN()
-    return vec(0, 1)
-end
-
 function Vector.__add(a, b)
     return vec(a.x + b.x, a.y + b.y)
 end
@@ -67,4 +51,19 @@ function Vector.__div(a, b)
     return vec(a.x / b.x, a.y / b.y)
 end
 
+local function freezeVector(v)
+    return setmetatable({}, {
+        __index = v,
+        __newindex = function()
+            error("Cannot modify a static direction vector", 2)
+        end
+    })
+end
 
+Vector.LEFT = freezeVector(vec(-1, 0))
+
+Vector.RIGHT = freezeVector(vec(1, 0))
+
+Vector.UP = freezeVector(vec(0, -1))
+
+Vector.DOWN = freezeVector(vec(0, 1))

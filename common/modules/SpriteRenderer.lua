@@ -9,7 +9,17 @@ function SpriteRenderer:init()
 end
 
 function SpriteRenderer:onLoad()
-    self.image = love.graphics.newImage(self.path)
+    if self.__dirty then
+        self.image = self.__dirty_image
+        self.__dirty = false
+    else
+        self.image = love.graphics.newImage(self.path)
+    end
+end
+
+function SpriteRenderer:setDirty(image)
+    self.__dirty = true
+    self.__dirty_image = image
 end
 
 function SpriteRenderer:fromData(data)

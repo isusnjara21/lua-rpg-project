@@ -33,6 +33,12 @@ function asset_ref:create_references()
             origin = vec(8, 8),
             static = true
         },
+        Floor1 = {
+            path = "game/assets/floor1.png",
+            size = vec(8, 8),
+            origin = vec(4, 4),
+            static = false
+        }
     }
 
     -- STACKED SPRITES

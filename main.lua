@@ -5,6 +5,7 @@ require "lib.struct.Vector3"
 require "common.util.HelperFunctions"
 require "common.util.Logger"
 require "engine.App"
+require "engine.Image"
 require "common.Global"
 
 function love.load()

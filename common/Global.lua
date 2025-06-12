@@ -7,6 +7,7 @@ function App:global()
     self.global_scale = 5
 
     self.TIME = Time()
+    self.IMAGE = Image()
 
     local w, h = love.graphics.getDimensions()
     self.screen = vec(w, h)

@@ -26,13 +26,13 @@ end
 
 function test:onInput(event)
     if event == "w" then
-        self.moveVec = self.moveVec + vec.UP()
+        self.moveVec = self.moveVec + vec.UP
     elseif event == "a" then
-        self.moveVec = self.moveVec + vec.LEFT()
+        self.moveVec = self.moveVec + vec.LEFT
     elseif event == "s" then
-        self.moveVec = self.moveVec + vec.DOWN()
+        self.moveVec = self.moveVec + vec.DOWN
     elseif event == "d" then
-        self.moveVec = self.moveVec + vec.RIGHT()
+        self.moveVec = self.moveVec + vec.RIGHT
     elseif event == "q" then
         self.rotate = self.rotate + self.rot_speed
     elseif event == "e" then
