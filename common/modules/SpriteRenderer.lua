@@ -17,9 +17,20 @@ function SpriteRenderer:onLoad()
     end
 end
 
+function SpriteRenderer:onUpdate()
+    self:applyDirty()
+end
+
 function SpriteRenderer:setDirty(image)
     self.__dirty = true
     self.__dirty_image = image
+end
+
+function SpriteRenderer:applyDirty()
+    if self.__dirty then
+        self.image = self.__dirty_image
+        self.__dirty = false
+    end
 end
 
 function SpriteRenderer:fromData(data)
