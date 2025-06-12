@@ -14,6 +14,7 @@ function testScene:create()
     player:setModule(app.ref.modules.test())
     player:setModule(app.ref.modules.testCam())
     
+    player.SpriteRenderer.z_index = 1
     self:putNode(player)
 
     local empty = Node()

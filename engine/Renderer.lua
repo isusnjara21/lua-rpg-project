@@ -41,7 +41,10 @@ end
 
 function Renderer:push(obj)
     table.insert(self.DRAWABLE_OBJECTS, obj)
+    local compare = function(a, b) return a.modules.SpriteRenderer.z_index < b.modules.SpriteRenderer.z_index end
+    table.sort(self.DRAWABLE_OBJECTS, compare)
 end
+
 function Renderer:pop()
     self.DRAWABLE_OBJECTS = {}
 end

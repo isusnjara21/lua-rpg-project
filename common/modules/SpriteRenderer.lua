@@ -5,6 +5,7 @@ function SpriteRenderer:init()
     self.size = vec(4, 4)
     self.origin = vec(2, 2)
     self.static = false
+    self.z_index = 0
 end
 
 function SpriteRenderer:onLoad()

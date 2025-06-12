@@ -1,6 +1,5 @@
 function SpriteNode()
     local obj = Node()
-    obj.super:init()
     obj:setModule(app.ref.modules.Transform())
     util.TransformAlias(obj)
     obj:setModule(app.ref.modules.SpriteRenderer())
