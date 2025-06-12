@@ -1,4 +1,4 @@
-require "assets.testScene"
+require "game.testScene"
 
 asset_ref = Object:extend()
 
@@ -13,8 +13,8 @@ function asset_ref:create_references()
         SpriteRenderer = require("common.modules.SpriteRenderer"),
         Collider = require("common.modules.Collider"),
 
-        test = require("assets.testModule"),
-        testCam = require("assets.testCamModule"),
+        test = require("game.testModule"),
+        testCam = require("game.testCamModule"),
     }
 
     -- NODES
@@ -29,7 +29,7 @@ function asset_ref:create_references()
     -- SPRITES
     self.sprites = {
         Player = {
-            path = "assets/Sprite-0001.png",
+            path = "game/assets/Sprite-0001.png",
             size = vec(16, 16),
             origin = vec(8, 8),
             static = true
