@@ -14,6 +14,8 @@ end
 function App:load()
     self.RENDERER = Renderer()
     self.CONTROLLER = Controller()
+    self.TIME = Time()
+    self.IMAGE = Image()
     self.ACTIVE_SCENE = {}
 
     self:change_scene(self.ref.scenes.test)
@@ -23,8 +25,6 @@ end
 
 function App:update(deltaTime)
     self.TIME:__set(deltaTime)
-
-    self.mouse:set(love.mouse.getPosition())
 
     Logger.log(love.timer.getFPS())
 
@@ -42,6 +42,14 @@ function App:update(deltaTime)
 
     -- LATE UPDATES
     self.ACTIVE_SCENE:lateUpdate(self.TIME:get())
+end
+
+function App:draw()
+    --[[
+    need to create dynamic buffer for renderer instead of pushing and popping entire buffer
+    so that each frame every object can declare its intent to be drawn (should be handled by hidden rn but for culling later)
+    --]]
+    self.RENDERER:draw_call()
 end
 
 function App:input_press(key)

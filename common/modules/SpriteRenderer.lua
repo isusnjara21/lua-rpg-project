@@ -2,10 +2,18 @@ SpriteRenderer = Module:extend()
 
 function SpriteRenderer:init()
     self.path = "common/textures/missing-texture.png"
-    self.size = vec(4, 4)
-    self.origin = vec(2, 2)
+
+    self.frame_size = vec(4, 4)
+    self.frame_origin = vec(2, 2)
+
+    self.size = vec(1, 1)
+
     self.static = false
+    --self.animated = false --testing
+
     self.z_index = 0
+
+    self.frame = 1
 end
 
 function SpriteRenderer:onLoad()
@@ -13,12 +21,27 @@ function SpriteRenderer:onLoad()
         self.image = self.__dirty_image
         self.__dirty = false
     else
-        self.image = love.graphics.newImage(self.path)
+        self.frames = self:sheetToFrames()
+        self.image = self.frames[self.frame]
     end
 end
 
 function SpriteRenderer:onUpdate()
-    self:applyDirty()
+    if not self:applyDirty() and self.__frame_update then
+        self:updateFrame()
+        self.__frame_update = false
+    end
+end
+
+function SpriteRenderer:updateFrame()
+    self.image = self.frames[self.frame]
+    self.__frame_update = true
+end
+
+function SpriteRenderer:sheetToFrames()
+    local sheet = love.graphics.newImage(self.path)
+    local frames = app.IMAGE:split(sheet, self.frame_size, self.size)
+    return frames
 end
 
 function SpriteRenderer:setDirty(image)
@@ -30,14 +53,18 @@ function SpriteRenderer:applyDirty()
     if self.__dirty then
         self.image = self.__dirty_image
         self.__dirty = false
+        self.__frame_update = false -- will block out frame updates when applying dirty to stop overriding (WIP)
+        return true
     end
+    return false
 end
 
 function SpriteRenderer:fromData(data)
     self.path = data.path
-    self.size = data.size
-    self.origin = data.origin
+    self.frame_size = data.frame_size
+    self.frame_origin = data.frame_origin
     self.static = data.static
+    self.size = data.size
 end
 
 function SpriteRenderer:toString()

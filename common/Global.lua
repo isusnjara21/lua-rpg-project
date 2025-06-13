@@ -8,9 +8,6 @@ function App:global()
     -- Size per pixel
     self.global_scale = 5
 
-    self.TIME = Time()
-    self.IMAGE = Image()
-
     self.mouse = vec(0, 0)
 
     local w, h = love.graphics.getDimensions()

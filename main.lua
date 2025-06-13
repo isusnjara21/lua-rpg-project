@@ -17,14 +17,14 @@ end
 function love.update(dt)
     app.stdout = ''
 
-    local w, h = love.graphics.getDimensions()
-    app.screen:set(w, h)
+    app.mouse:set(love.mouse.getPosition())
+    app.screen:set(love.graphics.getDimensions())
 
     app:update(dt)
 end
 
 function love.draw()
-    app.RENDERER:draw_call()
+    app:draw()
 
     -- standard output // for debugging purposes
     love.graphics.printf(app.stdout, 1, 1, 500, "left")

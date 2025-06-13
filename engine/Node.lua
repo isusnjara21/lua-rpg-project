@@ -2,7 +2,7 @@ Node = Object:extend()
 
 function Node:init()
     self.modules = {}
-
+    self.hidden = false
     self.children = {}
     self.parent = nil
 end

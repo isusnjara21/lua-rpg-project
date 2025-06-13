@@ -8,8 +8,9 @@ end
     the position of image has to be at same index as image in respective buffers
 --]]
 function Image:join(image_buffer, position_buffer)
-    if #image_buffer ~= #position_buffer then error("Image buffer and Position buffer need to be the same length.") end
-
+    if #image_buffer ~= #position_buffer then
+        error("Image buffer and Position buffer need to be the same length.")
+    end
 
     local minX, minY, maxX, maxY = math.huge, math.huge, -math.huge, -math.huge
     for i, img in ipairs(image_buffer) do
@@ -26,7 +27,6 @@ function Image:join(image_buffer, position_buffer)
     local canvasHeight = maxY - minY
     local canvas = love.graphics.newCanvas(canvasWidth, canvasHeight)
 
-
     love.graphics.setCanvas(canvas)
     love.graphics.clear()
 
@@ -39,4 +39,27 @@ function Image:join(image_buffer, position_buffer)
     love.graphics.setCanvas()
 
     return canvas
+end
+
+function Image:split(image, frame_size, image_size)
+    local frames = {}
+    
+    if image_size.x == 1 and image_size.y == 1 then
+        table.insert(frames, image)
+        return frames
+    end
+
+    for y = 1, image_size.y do
+        for x = 1, image_size.x do
+            local canvas = love.graphics.newCanvas(frame_size.x, frame_size.y)
+            love.graphics.setCanvas(canvas)
+            love.graphics.clear()
+
+            love.graphics.draw(image, -(x-1) * frame_size.x, -(y-1) * frame_size.y)
+
+            love.graphics.setCanvas()
+            table.insert(frames, canvas)
+        end
+    end
+    return frames
 end

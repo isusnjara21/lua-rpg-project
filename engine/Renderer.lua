@@ -1,12 +1,15 @@
 Renderer = Object:extend()
 function Renderer:init()
     self.DRAWABLE_OBJECTS = {}
+
+    self.compare = function(a, b) return a.modules.SpriteRenderer.z_index < b.modules.SpriteRenderer.z_index end
+
     love.graphics.setDefaultFilter("nearest")
 end
 
 function Renderer:draw_call()
     for _, node in pairs(self.DRAWABLE_OBJECTS) do
-        if node.modules.SpriteRenderer and node.modules.Transform then
+        if node.modules.SpriteRenderer and node.modules.Transform and not node.hidden then
             local worldPosition = node.modules.Transform.position
             local camPosition = app.camera.Transform.position
             local camOffset = app.screen / vec(2, 2)
@@ -32,8 +35,8 @@ function Renderer:draw_call()
                 screenRotation,
                 scale.x * app.global_scale,
                 scale.y * app.global_scale,
-                node.modules.SpriteRenderer.origin.x,
-                node.modules.SpriteRenderer.origin.y
+                node.modules.SpriteRenderer.frame_origin.x,
+                node.modules.SpriteRenderer.frame_origin.y
             )
         end
     end
@@ -41,8 +44,7 @@ end
 
 function Renderer:push(obj)
     table.insert(self.DRAWABLE_OBJECTS, obj)
-    local compare = function(a, b) return a.modules.SpriteRenderer.z_index < b.modules.SpriteRenderer.z_index end
-    table.sort(self.DRAWABLE_OBJECTS, compare)
+    table.sort(self.DRAWABLE_OBJECTS, self.compare)
 end
 
 function Renderer:pop()

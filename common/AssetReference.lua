@@ -11,9 +11,8 @@ function asset_ref:create_references()
         SpriteRenderer = require("common.modules.SpriteRenderer"),
         Collider = require("common.modules.Collider"),
         TileMapBuilder = require("common.modules.TileMapBuilder"),
-
         test = require("game.testModule"),
-        testCam = require("game.testCamModule"),
+        testCam = require("game.testCamModule")
     }
 
     -- NODES
@@ -31,15 +30,17 @@ function asset_ref:create_references()
     self.sprites = {
         Player = {
             path = "game/assets/Sprite-0001.png",
-            size = vec(16, 16),
-            origin = vec(8, 8),
-            static = true
+            frame_size = vec(16, 16),
+            frame_origin = vec(8, 8),
+            static = true,
+            size = vec(1, 1)
         },
         Floor1 = {
             path = "game/assets/floor1.png",
-            size = vec(8, 8),
-            origin = vec(4, 4),
-            static = false
+            frame_size = vec(8, 8),
+            frame_origin = vec(4, 4),
+            static = false,
+            size = vec(1, 1)
         }
     }
 
