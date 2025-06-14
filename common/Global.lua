@@ -2,6 +2,7 @@ require "common.AssetReference"
 
 function App:global()
     self.__VERSION = "0.0.1"
+    self.__RUNTIME = "release"
 
     self.ref = asset_ref()
 

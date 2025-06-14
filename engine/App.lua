@@ -4,6 +4,7 @@ require "engine.Node"
 require "engine.Scene"
 require "engine.Module"
 require "engine.Time"
+require "engine.Collision"
 
 App = Object:extend()
 
@@ -16,6 +17,7 @@ function App:load()
     self.CONTROLLER = Controller()
     self.TIME = Time()
     self.IMAGE = Image()
+    self.COLLISION = Collision()
     self.ACTIVE_SCENE = {}
 
     self:change_scene(self.ref.scenes.test2)

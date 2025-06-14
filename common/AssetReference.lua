@@ -34,7 +34,7 @@ function asset_ref:create_references()
             path = "game/assets/Sprite-0001.png",
             frame_size = vec(16, 16),
             frame_origin = vec(8, 8),
-            static = true,
+            static = false,
             size = vec(1, 1)
         },
         Floor1 = {

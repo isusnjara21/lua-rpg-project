@@ -37,6 +37,12 @@ function Vector:rotate(angle)
     local sinA = math.sin(angle)
     self.x = x * cosA - y * sinA
     self.y = x * sinA + y * cosA
+    return self
+end
+
+function Vector:clone()
+    local newVec = vec(self.x, self.y)
+    return newVec
 end
 
 function Vector.__add(a, b)
@@ -49,6 +55,10 @@ end
 
 function Vector.__div(a, b)
     return vec(a.x / b.x, a.y / b.y)
+end
+
+function Vector:scale(scalar)
+    return vec(self.x * scalar, self.y * scalar)
 end
 
 local function freezeVector(v)

@@ -8,7 +8,14 @@ require "engine.App"
 require "engine.Image"
 require "common.Global"
 
-function love.load()
+function love.load(arg)
+    local args = util.__parseArgs(arg)
+
+    if args.debug or args.d then
+        print("Running in debug mode...")
+        app.__RUNTIME = "debug"
+    end
+
     app.stdout = ''
 
     app:load()

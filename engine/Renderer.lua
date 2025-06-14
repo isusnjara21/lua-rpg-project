@@ -45,6 +45,16 @@ function Renderer:draw_call()
             )
         end
     end
+
+    if app.__RUNTIME == "debug" then
+        for _, node in pairs(self.DRAWABLE_OBJECTS) do
+            for _, module in pairs(node.modules) do
+                if module.onDebugDraw then
+                    module:onDebugDraw()
+                end
+            end
+        end
+    end
 end
 
 --[[ -- no longer used
@@ -53,7 +63,6 @@ function Renderer:push(obj)
     self.__sort_dirty = true
 end
 --]]
-
 function Renderer:pop()
     self.DRAWABLE_OBJECTS = {}
 end
@@ -87,4 +96,19 @@ function Renderer:flushSort()
         table.sort(self.DRAWABLE_OBJECTS, self.compare)
         self.__sort_dirty = false
     end
+end
+
+-- WIP currently only implemented for SpriteRenderer
+function Renderer:isVisible(node)
+    local pos =
+        util.WorldToScreen(
+        node.modules.Transform.position,
+        app.camera.Transform.position,
+        app.camera.Transform.rotation
+    )
+    local size = node.modules.SpriteRenderer.frame_size * node.modules.Transform.scale * app.global_scale
+    local halfScreen = app.screen / 2
+
+    return not (pos.x + size.x < 0 or pos.x - size.x > app.screen.x or pos.y + size.y < 0 or
+        pos.y - size.y > app.screen.y)
 end

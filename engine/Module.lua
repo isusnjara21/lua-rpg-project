@@ -30,6 +30,17 @@ end
 function Module:onLateUpdate(deltaTime)
 end
 
+function Module:onCollision(collider)
+end
+
+function Module:onEnterCollision(collider)
+end
+
+function Module:onExitCollision(collider)
+end
+
+function Module:onDebugDraw()
+end
 
 function Module:toString()
     return self:__toString()
