@@ -19,9 +19,23 @@ function Scene:putNode(node)
     table.insert(self.nodes, node)
 end
 
+function Scene:putNodes(nodes)
+    for _, node in ipairs(nodes) do
+        self:putNode(node)
+    end
+end
+
 function Scene:load()
     for node in self:activeNode_iterator() do
         node:load(dt)
+    end
+end
+
+function Scene:unloadNode(node, arg)
+    node:unload(arg)
+
+    if arg.full and not arg.deep then
+        self:putNodes(children)
     end
 end
 

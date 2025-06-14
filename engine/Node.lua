@@ -50,6 +50,10 @@ function Node:load()
         end
     end
 
+    if app.RENDERER and self.modules.SpriteRenderer then
+        app.RENDERER:add(self)
+    end
+
     for _, child in ipairs(self.children) do
         child:load(dt)
     end
@@ -69,7 +73,9 @@ function Node:isDescendant(ancestor)
     Generic.assertType(ancestor, Node)
     local node = self
     while node do
-        if node == ancestor then return true end
+        if node == ancestor then
+            return true
+        end
         node = node.parent
     end
     return false
@@ -95,5 +101,58 @@ function Node:RemoveChild(child)
             child.parent = nil
             return
         end
+    end
+end
+
+--[[
+    arg that these functions take is either none or a table with arguments: deep, full
+    deep:
+    to determine how big of an unload it is
+    deep meaning it happens for all its children too
+    full:
+    to fully unload the node, detach itself from all its children and destroy it ready for garbage collection
+    use this to only destroy the object and not try to reinstate it
+--]]
+function Node:unload(arg)
+    arg = arg or {}
+
+    if app.RENDERER then
+        app.RENDERER:remove(self)
+    end
+
+    for _, module in pairs(self.modules) do
+        if module.onUnload then
+            module:onUnload()
+        end
+    end
+
+    if arg.deep and not arg.full then
+        for _, child in ipairs(self.children) do
+            child:unload({full = false, deep = true})
+        end
+    end
+
+    if arg.full then
+        if self.parent then
+            self.parent:RemoveChild(self)
+        end
+        if arg.deep then
+            for _, child in ipairs(self.children) do
+                child:unload({full = true, deep = true})
+            end
+            self.children = {}
+        else
+            for _, child in ipairs(self.children) do
+                child.parent = nil
+            end
+            self.children = {}
+        end
+
+        for _, module in pairs(self.modules) do
+            if module.onDestroy then
+                module:onDestroy()
+            end
+        end
+        self.modules = {}
     end
 end

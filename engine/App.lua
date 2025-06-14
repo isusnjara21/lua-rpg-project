@@ -48,6 +48,9 @@ function App:draw()
     --[[
     need to create dynamic buffer for renderer instead of pushing and popping entire buffer
     so that each frame every object can declare its intent to be drawn (should be handled by hidden rn but for culling later)
+
+    should be fine by making a game side script for automatic position checking for putting things to hidden for culling,
+    but a dynamic buffer should be more performant (except maybe it needing to sort again each frame??)
     --]]
     self.RENDERER:draw_call()
 end
@@ -68,11 +71,13 @@ function App:change_scene(__scene)
     app.camera.Transform.rotation = 0
 
     -- NORMAL SPRITES
+    --[[ -- no longer needed as Node handles itself on load
     for node in self.ACTIVE_SCENE:activeNode_iterator() do
         if node:getModules().SpriteRenderer then
             self.RENDERER:push(node)
         end
     end
+    --]]
 end
 
 

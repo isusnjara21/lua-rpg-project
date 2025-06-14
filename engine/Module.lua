@@ -6,6 +6,12 @@ end
 function Module:onLoad()
 end
 
+function Module:onUnload()
+end
+
+function Module:onDestroy()
+end
+
 function Module:onInput(event)
 end
 

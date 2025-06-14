@@ -49,6 +49,6 @@ function asset_ref:create_references()
     -- STACKED SPRITES
     self.stacked_sprites = {}
 
-    -- SHARED STATE
+    -- SHARED STATE -- organized, managed and handled by game-side code
     self.dynamic = {}
 end
