@@ -47,10 +47,12 @@ function Renderer:draw_call()
     end
 end
 
+--[[ -- no longer used
 function Renderer:push(obj)
     table.insert(self.DRAWABLE_OBJECTS, obj)
     self.__sort_dirty = true
 end
+--]]
 
 function Renderer:pop()
     self.DRAWABLE_OBJECTS = {}

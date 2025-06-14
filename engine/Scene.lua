@@ -32,11 +32,14 @@ function Scene:load()
 end
 
 function Scene:unloadNode(node, arg)
+    arg = arg or {}
     node:unload(arg)
 
     if arg.full and not arg.deep then
         self:putNodes(children)
     end
+
+    return node
 end
 
 function Scene:update(dt)

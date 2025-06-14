@@ -11,6 +11,7 @@ function test:onLoad()
 end
 
 function test:onUpdate(dt)
+    --Logger.log(app.ACTIVE_SCENE.nodes[1].SpriteRenderer)
     self.moveVec:normalize()
     self.moveVec:rotate(self.node.Transform.rotation)
     self.node.Transform:translate(self.moveVec.x * dt * self.speed, self.moveVec.y * dt * self.speed)
@@ -19,8 +20,7 @@ function test:onUpdate(dt)
     self.moveVec.y = 0
     self.rotate = 0
 
-    Logger.log("x = " .. self.node.position.x)
-    Logger.log("y = " .. self.node.position.y)
+    Logger.log(self.node.position)
     Logger.log(app.TIME:get())
 end
 
@@ -40,9 +40,9 @@ function test:onInput(event)
     elseif event == "r" then
         app:change_scene(app.ref.scenes.test)
     elseif event == "k" then
-        app.TIME:set_scale(app.TIME.time_scale + 0.01)
+        app.ACTIVE_SCENE:unloadNode(app.ACTIVE_SCENE.nodes[1])
     elseif event == "j" then
-        app.TIME:set_scale(app.TIME.time_scale - 0.01)
+        app.ACTIVE_SCENE.nodes[1]:load()
     end
 end
 

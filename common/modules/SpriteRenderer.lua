@@ -17,6 +17,12 @@ function SpriteRenderer:init()
 end
 
 function SpriteRenderer:onLoad()
+    if self.__use_image_override then
+        self.image = self.__dirty_image or love.graphics.newImage("common/textures/missing-texture.png")
+        self.frames = {self.image}
+        return
+    end
+
     if self.__dirty then
         self.image = self.__dirty_image
         self.__dirty = false
@@ -44,7 +50,14 @@ function SpriteRenderer:sheetToFrames()
     return frames
 end
 
-function SpriteRenderer:setDirty(image)
+function SpriteRenderer:setDirty(image, arg)
+    arg = arg or {}
+    if arg.override then
+        self.__use_image_override = true
+    elseif not arg.override and self.__use_image_override then
+        self.__use_image_override = false
+    end
+
     self.__dirty = true
     self.__dirty_image = image
 end

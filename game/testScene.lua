@@ -2,7 +2,7 @@ testScene = Scene:extend()
 
 function testScene:create()
     local aaa = app.ref.nodes.Sprite()
-    aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage)
+    aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage, {override = true})
     aaa.SpriteRenderer.static = true
     aaa.position:set(300, 300)
     self:putNode(aaa)

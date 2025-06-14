@@ -79,5 +79,3 @@ function App:change_scene(__scene)
     end
     --]]
 end
-
-
