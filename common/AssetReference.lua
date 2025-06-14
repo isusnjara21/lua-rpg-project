@@ -12,7 +12,8 @@ function asset_ref:create_references()
         Collider = require("common.modules.Collider"),
         TileMapBuilder = require("common.modules.TileMapBuilder"),
         test = require("game.testModule"),
-        testCam = require("game.testCamModule")
+        testCam = require("game.testCamModule"),
+        loader = require("game.loaderModule")
     }
 
     -- NODES
@@ -23,7 +24,8 @@ function asset_ref:create_references()
 
     -- SCENES -- WIP
     self.scenes = {
-        test = require("game.testScene")
+        test = require("game.testScene"),
+        test2 = require("game.testScene2")
     }
 
     -- SPRITES
@@ -46,4 +48,7 @@ function asset_ref:create_references()
 
     -- STACKED SPRITES
     self.stacked_sprites = {}
+
+    -- SHARED STATE
+    self.dynamic = {}
 end

@@ -2,7 +2,8 @@ testScene = Scene:extend()
 
 function testScene:create()
     local aaa = app.ref.nodes.Sprite()
-    aaa.SpriteRenderer:fromData(app.ref.sprites.Player)
+    aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage)
+    aaa.SpriteRenderer.static = true
     aaa.position:set(300, 300)
     self:putNode(aaa)
 
@@ -40,9 +41,7 @@ function testScene:create()
 
     self:putNode(empty2)
 
-    local tilemap = app.ref.nodes.TileMap()
-    tilemap.TileMapBuilder:loadData("")
-    tilemap.Transform.position:set(10, 10)
+    local tilemap = app.ref.dynamic["tileMapTest"]
 
     self:putNode(tilemap)
 end

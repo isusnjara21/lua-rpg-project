@@ -18,7 +18,7 @@ function App:load()
     self.IMAGE = Image()
     self.ACTIVE_SCENE = {}
 
-    self:change_scene(self.ref.scenes.test)
+    self:change_scene(self.ref.scenes.test2)
 
     self.__dt_accumulator = 0
 end

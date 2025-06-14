@@ -63,3 +63,7 @@ function Image:split(image, frame_size, image_size)
     end
     return frames
 end
+
+function Image:load(path)
+    return love.graphics.newImage(path)
+end

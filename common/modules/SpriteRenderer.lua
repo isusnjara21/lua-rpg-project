@@ -21,7 +21,7 @@ function SpriteRenderer:onLoad()
         self.image = self.__dirty_image
         self.__dirty = false
     else
-        self.frames = self:sheetToFrames()
+        self.frames = self:sheetToFrames() or {love.graphics.newImage("common/textures/missing-texture.png")}
         self.image = self.frames[self.frame]
     end
 end
@@ -39,7 +39,7 @@ function SpriteRenderer:updateFrame()
 end
 
 function SpriteRenderer:sheetToFrames()
-    local sheet = love.graphics.newImage(self.path)
+    local sheet = app.IMAGE:load(self.path)
     local frames = app.IMAGE:split(sheet, self.frame_size, self.size)
     return frames
 end
