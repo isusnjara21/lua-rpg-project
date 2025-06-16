@@ -24,6 +24,16 @@ function test:onUpdate(dt)
     Logger.log(app.TIME:get())
 end
 
+function test:onEnterCollision(collider)
+    self.node.modules.Collider.debug_color = {0, 1, 0}
+    collider.debug_color = {0, 0, 1}
+end
+
+function test:onExitCollision(collider)
+    self.node.modules.Collider.debug_color = {1, 1, 0}
+    collider.debug_color = {1, 1, 0}
+end
+
 function test:onInput(event)
     if event == "w" then
         self.moveVec = self.moveVec + vec.UP

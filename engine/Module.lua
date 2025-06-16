@@ -42,6 +42,12 @@ end
 function Module:onDebugDraw()
 end
 
+function Module:onUpdateFrame(animation, frame)
+end
+
+function Module:onChangeAnimation(animation)
+end
+
 function Module:toString()
-    return self:__toString()
+    return self:__tostring()
 end

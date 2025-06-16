@@ -1,26 +1,43 @@
 Collider = Module:extend()
 
+local id_counter = 0
+
 function Collider:init()
+    id_counter = id_counter + 1
+    self.__id = id_counter
+
     self.type = "obb"
     self.offset = vec(0, 0)
 
     self.collider_data = {
         size = vec(1, 1)
     }
+
+    self.layer = ""
+    self.mask = {}
+    self.tags = {}
+
+    self.debug_color = {1, 1, 0}
+end
+
+function Collider:setCollider(collider)
 end
 
 function Collider:onLoad()
-    --app.COLLISION:register(self)
+    app.COLLISION:register(self)
 end
 
 function Collider:onUnload()
-    --app.COLLISION:unregister(self)
+    app.COLLISION:unregister(self)
 end
 
 function Collider:fromData(data)
     self.type = data.type
     self.offset = data.offset
     self.collider_data = data.collider_data
+    self.layer = data.layer
+    self.masks = data.masks
+    self.tags = data.tags
 end
 
 function Collider:onDebugDraw()
@@ -32,7 +49,7 @@ function Collider:onDebugDraw()
 
     local pos = util.WorldToScreen(self:getWorldPosition(), camPosition, camRotation)
 
-    love.graphics.setColor(1, 1, 0)
+    love.graphics.setColor(self.debug_color)
 
     if self.type == "circle" then
         love.graphics.circle("line", pos.x, pos.y, self.collider_data.radius * app.global_scale)

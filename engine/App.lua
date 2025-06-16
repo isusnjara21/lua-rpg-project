@@ -32,6 +32,8 @@ function App:update(deltaTime)
 
     self.CONTROLLER:update()
 
+    self.COLLISION:update()
+
     -- FIXED UPDATES
     self.__dt_accumulator = self.__dt_accumulator + self.TIME:get_raw() -- idk about this, 
     while self.__dt_accumulator >= self.TIME.fixedDeltaTime do

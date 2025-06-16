@@ -61,6 +61,10 @@ function Vector:scale(scalar)
     return vec(self.x * scalar, self.y * scalar)
 end
 
+function Vector:dot(vector)
+    return self.x * vector.x + self.y * vector.y
+end
+
 local function freezeVector(v)
     return setmetatable({}, {
         __index = v,

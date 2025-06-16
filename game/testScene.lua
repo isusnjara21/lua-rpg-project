@@ -21,7 +21,10 @@ function testScene:create()
             offset = vec(0, 0),
             collider_data = {
                 size = vec(16, 16)
-            }
+            },
+            layer = "",
+            masks = {},
+            tags = {}
         }
     )
 
@@ -62,6 +65,7 @@ function testScene:create()
     local tilemap = app.ref.dynamic["tileMapTest"]
 
     self:putNode(tilemap)
+    
 end
 
 return testScene
