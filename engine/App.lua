@@ -60,6 +60,8 @@ function App:draw()
     should be fine by making a game side script for automatic position checking for putting things to hidden for culling,
     but a dynamic buffer should be more performant (except maybe it needing to sort again each frame??)
     --]]
+
+    
     self.RENDERER:draw_call()
 end
 

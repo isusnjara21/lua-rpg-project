@@ -25,7 +25,6 @@ function love.update(dt)
     app.stdout = ''
 
     app.mouse:set(love.mouse.getPosition())
-    app.screen:set(love.graphics.getDimensions())
 
     app:update(dt)
 end

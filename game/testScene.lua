@@ -5,6 +5,7 @@ function testScene:create()
     aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage, {override = true})
     aaa.SpriteRenderer.static = false
     aaa.position:set(300, 300)
+    aaa.SpriteRenderer.z_index = 3
     self:putNode(aaa)
 
     local player = app.ref.nodes.Sprite()
@@ -59,6 +60,7 @@ function testScene:create()
     empty2.position:set(300, 359)
     empty2.scale:set(10, 10)
     empty2.Transform:setRotation(0.7)
+    empty2.SpriteRenderer.z_index = 2
 
     self:putNode(empty2)
 

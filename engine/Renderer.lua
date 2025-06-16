@@ -1,17 +1,22 @@
 Renderer = Object:extend()
 function Renderer:init()
+    love.graphics.setDefaultFilter("nearest", "nearest")
+
     self.DRAWABLE_OBJECTS = {}
     self.__sort_diry = false
-
+    self.__virtual_screen = love.graphics.newCanvas(app.screen.x, app.screen.y)
     self.compare = function(a, b)
         return a.modules.SpriteRenderer.z_index < b.modules.SpriteRenderer.z_index
     end
 
-    love.graphics.setDefaultFilter("nearest")
+    
 end
 
 function Renderer:draw_call()
     self:flushSort()
+
+    love.graphics.setCanvas(self.__virtual_screen)
+    love.graphics.clear()
 
     for _, node in pairs(self.DRAWABLE_OBJECTS) do
         if node.modules.SpriteRenderer and node.modules.Transform and not node.hidden then
@@ -55,6 +60,20 @@ function Renderer:draw_call()
             end
         end
     end
+
+
+    love.graphics.setCanvas()
+
+    local sw, sh = love.graphics.getDimensions()
+    local scaleX = sw / app.screen.x
+    local scaleY = sh / app.screen.y
+    local scale = math.max(scaleX, scaleY)
+    local offsetX = (sw - (app.screen.x * scale)) / 2
+    local offsetY = (sh - (app.screen.y * scale)) / 2
+
+    love.graphics.push()
+    love.graphics.draw(self.__virtual_screen, offsetX, offsetY, 0, scale, scale)
+    love.graphics.pop()
 end
 
 --[[ -- no longer used

@@ -6,13 +6,12 @@ function App:global()
 
     self.ref = asset_ref()
 
-    -- Size per pixel
-    self.global_scale = 5
+    -- zoom
+    self.global_scale = 1
 
     self.mouse = vec(0, 0)
 
-    local w, h = love.graphics.getDimensions()
-    self.screen = vec(w, h)
+    self.screen = vec(640, 480)
 
     self.camera = {
         Transform = self.ref.modules.Transform()
