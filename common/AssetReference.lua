@@ -5,6 +5,7 @@ function asset_ref:init()
 end
 
 function asset_ref:create_references()
+    --[[ OBJECTS ]]
     -- MODULES
     self.modules = {
         Transform = require("common.modules.Transform"),
@@ -28,6 +29,7 @@ function asset_ref:create_references()
         test2 = require("game.testScene2")
     }
 
+    -- [[ TABLES ]]
     -- SPRITES
     self.sprites = {
         Player = {
@@ -37,12 +39,34 @@ function asset_ref:create_references()
             static = false,
             size = vec(1, 1)
         },
-        Floor1 = {
-            path = "game/assets/floor1.png",
-            frame_size = vec(8, 8),
-            frame_origin = vec(4, 4),
-            static = false,
-            size = vec(1, 1)
+        Sheet = {
+            path = "game/assets/Sprite-0001-Sheet.png",
+            frame_size = vec(16, 16),
+            frame_origin = vec(8, 8),
+            static = true,
+            size = vec(16, 1),
+            animation = {
+                default = 'sequence1',
+                sequence1 = {
+                    looping = false,
+                    timings = 1/3,
+                    frames = {1, 2, 3, 4},
+                    _after = 'sequence2'
+                },
+                sequence2 = {
+                    looping = false,
+                    timings = 1/12,
+                    frames = {16, 8, 4, 2, 1},
+                    _after = 'sequence3'
+                },
+                sequence3 = {
+                    looping = false,
+                    timings = {1/6, 1/6, 1/6, 1/6, 1, 1, 1},
+                    frames = {5, 6, 7, 8, 10, 11, 12},
+                    _after = 'sequence1' -- will default to 'default' if not defined, happens if no looping
+                    -- _stop = true -- will check for this if not looping, will freeze the animation at last frame until sequence changes
+                }
+            }, 
         }
     }
 

@@ -9,7 +9,6 @@ function SpriteRenderer:init()
     self.size = vec(1, 1)
 
     self.static = false
-    --self.animated = false --testing
 
     self.z_index = 0
 
@@ -17,6 +16,10 @@ function SpriteRenderer:init()
 end
 
 function SpriteRenderer:onLoad()
+    if self.animation then
+        app.ANIMATOR:register(self)
+    end
+
     if self.__use_image_override then
         self.image = self.__dirty_image or love.graphics.newImage("common/textures/missing-texture.png")
         self.frames = {self.image}
@@ -32,15 +35,20 @@ function SpriteRenderer:onLoad()
     end
 end
 
+function SpriteRenderer:onUnload()
+    if self.animated then
+        app.ANIMATOR:unregister(self)
+    end
+end
+
 function SpriteRenderer:onUpdate()
     if not self:applyDirty() and self.__frame_update then
-        self:updateFrame()
+        self.image = self.frames[self.frame]
         self.__frame_update = false
     end
 end
 
 function SpriteRenderer:updateFrame()
-    self.image = self.frames[self.frame]
     self.__frame_update = true
 end
 
@@ -78,6 +86,9 @@ function SpriteRenderer:fromData(data)
     self.frame_origin = data.frame_origin
     self.static = data.static
     self.size = data.size
+    if data.animation then
+        self.animation = data.animation
+    end
 end
 
 function SpriteRenderer:toString()

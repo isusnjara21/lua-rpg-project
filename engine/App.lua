@@ -4,6 +4,7 @@ require "engine.Node"
 require "engine.Scene"
 require "engine.Module"
 require "engine.Time"
+require "engine.Animator"
 require "engine.Collision"
 
 App = Object:extend()
@@ -18,6 +19,7 @@ function App:load()
     self.TIME = Time()
     self.IMAGE = Image()
     self.COLLISION = Collision()
+    self.ANIMATOR = Animator()
     self.ACTIVE_SCENE = {}
 
     self:change_scene(self.ref.scenes.test2)
@@ -33,6 +35,8 @@ function App:update(deltaTime)
     self.CONTROLLER:update()
 
     self.COLLISION:update()
+
+    self.ANIMATOR:update(self.TIME:get())
 
     -- FIXED UPDATES
     self.__dt_accumulator = self.__dt_accumulator + self.TIME:get_raw() -- idk about this, 

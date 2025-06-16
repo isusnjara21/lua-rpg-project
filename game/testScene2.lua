@@ -13,6 +13,12 @@ function testScene2:create()
 
     local PlayerImage = app.IMAGE:load(app.ref.sprites.Player.path)
     app.ref.dynamic["PlayerImage"] = PlayerImage
+
+
+    local sheet = app.ref.nodes.Sprite()
+    sheet.SpriteRenderer:fromData(app.ref.sprites.Sheet)
+    sheet.SpriteRenderer.z_index = 2
+    app.ref.dynamic["Sheet"] = sheet
 end
 
 return testScene2

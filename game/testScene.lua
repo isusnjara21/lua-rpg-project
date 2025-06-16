@@ -66,6 +66,9 @@ function testScene:create()
 
     self:putNode(tilemap)
     
+    local sheet = app.ref.dynamic["Sheet"]
+    self:putNode(sheet)
+
 end
 
 return testScene
