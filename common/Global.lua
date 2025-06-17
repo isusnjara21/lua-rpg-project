@@ -6,13 +6,15 @@ function App:global()
 
     self.ref = asset_ref()
 
-    -- zoom
+    -- window
     self.global_scale = 1
+    self.screen = vec(640, 480)
+    self.window = vec(love.graphics.getDimensions())
 
+    -- mouse
     self.mouse = vec(0, 0)
 
-    self.screen = vec(640, 480)
-
+    -- camera
     self.camera = {
         Transform = self.ref.modules.Transform()
     }

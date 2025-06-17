@@ -16,6 +16,15 @@ function love.load(arg)
         app.__RUNTIME = "debug"
     end
 
+    local window_size = app.screen
+    if args.width or args.w then
+        window_size.x = args.width or args.w
+    end
+    if args.height or args.h then
+        window_size.y = args.height or args.h
+    end
+    app.screen:set(window_size.x + 0, window_size.y + 0)
+
     app.stdout = ''
 
     app:load()
@@ -24,6 +33,8 @@ end
 function love.update(dt)
     app.stdout = ''
 
+    app.window:set(love.graphics.getDimensions())
+    
     app.mouse:set(love.mouse.getPosition())
 
     app:update(dt)

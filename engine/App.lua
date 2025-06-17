@@ -75,6 +75,8 @@ end
 
 function App:change_scene(__scene)
     self.RENDERER:pop()
+    self.ANIMATOR:pop()
+    self.COLLISION:pop()
     self.ACTIVE_SCENE = __scene()
 
     app.camera.Transform.position:set(self.ACTIVE_SCENE.initial_camera_position.x, self.ACTIVE_SCENE.initial_camera_position.y, self.ACTIVE_SCENE.initial_camera_position.z)

@@ -34,6 +34,10 @@ function test:onExitCollision(collider)
     collider.debug_color = {1, 1, 0}
 end
 
+function test:onCollision(collider)
+    Logger.log(collider)
+end
+
 function test:onInput(event)
     if event == "w" then
         self.moveVec = self.moveVec + vec.UP

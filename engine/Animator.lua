@@ -1,7 +1,7 @@
 Animator = Object:extend()
 
 function Animator:init()
-    self.animations = {}
+    self.ANIMATIONS = {}
 end
 
 function Animator:register(mod)
@@ -11,21 +11,25 @@ function Animator:register(mod)
         current_frame = 1,
         dt = 0
     }
-    table.insert(self.animations, animation)
+    table.insert(self.ANIMATIONS, animation)
 end
 
 function Animator:unregister(mod)
-    for i = #self.animations, 1, -1 do
-        if self.animations[i].module == mod then
-            table.remove(self.animations, i)
+    for i = #self.ANIMATIONS, 1, -1 do
+        if self.ANIMATIONS[i].module == mod then
+            table.remove(self.ANIMATIONS, i)
             break
         end
     end
 end
 
+function Animator:pop()
+    self.ANIMATIONS = {}
+end
+
 function Animator:update(dt)
-    for i = 1, #self.animations do
-        local animation = self.animations[i]
+    for i = 1, #self.ANIMATIONS do
+        local animation = self.ANIMATIONS[i]
         animation.dt = animation.dt + dt
         local currentAnimationTimings =animation.module.animation[animation.current].timings
         if type(currentAnimationTimings) == 'table' then

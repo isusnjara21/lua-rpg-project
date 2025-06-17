@@ -1,20 +1,25 @@
 Collision = Object:extend()
 function Collision:init()
-    self.colliders = {}
-    self.collisions = {}
+    self.COLLIDERS = {}
+    self.COLLISIONS = {}
 end
 
 function Collision:register(collider)
-    table.insert(self.colliders, collider)
+    table.insert(self.COLLIDERS, collider)
 end
 
 function Collision:unregister(collider)
-    for i = #self.colliders, 1, -1 do
-        if self.colliders[i] == collider then
-            table.remove(self.colliders, i)
+    for i = #self.COLLIDERS, 1, -1 do
+        if self.COLLIDERS[i] == collider then
+            table.remove(self.COLLIDERS, i)
             break
         end
     end
+end
+
+function Collision:pop()
+    self.COLLIDERS = {}
+    self.COLLISIONS = {}
 end
 
 function Collision:update()
@@ -33,26 +38,26 @@ function Collision:update()
             }
         end
     end
-    for i = 1, #self.colliders do
-        local a = self.colliders[i]
+    for i = 1, #self.COLLIDERS do
+        local a = self.COLLIDERS[i]
         local aShape = getScaledShape(a)
         if aShape then
-            for j = i + 1, #self.colliders do
-                local b = self.colliders[j]
+            for j = i + 1, #self.COLLIDERS do
+                local b = self.COLLIDERS[j]
                 local bShape = getScaledShape(b)
                 if bShape then
                     local isColliding = self:checkCollision(aShape, bShape)
                     local collision_key = self:_createCollisionKey(a, b)
                     if isColliding then
-                        if not self.collisions[collision_key] then
+                        if not self.COLLISIONS[collision_key] then
                             self:_dispatch(a, b, "onEnterCollision")
-                            self.collisions[collision_key] = true
+                            self.COLLISIONS[collision_key] = true
                         else
                             self:_dispatch(a, b, "onCollision")
                         end
-                    elseif self.collisions[collision_key] then
+                    elseif self.COLLISIONS[collision_key] then
                         self:_dispatch(a, b, "onExitCollision")
-                        self.collisions[collision_key] = nil
+                        self.COLLISIONS[collision_key] = nil
                     end
                 end
             end
