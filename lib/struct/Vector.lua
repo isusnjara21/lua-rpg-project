@@ -57,6 +57,18 @@ function Vector.__div(a, b)
     return vec(a.x / b.x, a.y / b.y)
 end
 
+function Vector.__mul(a, b)
+    if type(a) == 'number' and type(b) == "table" and b.x and b.y then
+        return vec(b.x * a, b.y * a)
+    elseif type(b) == "number" and type(a) == "table" and a.x and a.y then
+        return vec(a.x * b, a.y * b)
+    elseif type(a) == "table" and type(b) == "table" and a.x and a.y and b.x and b.y then
+        return vec(a.x * b.x, a.y * b.y)
+    else
+        error("Invalid operands for vector multiplication")
+    end
+end
+
 function Vector:scale(scalar)
     return vec(self.x * scalar, self.y * scalar)
 end

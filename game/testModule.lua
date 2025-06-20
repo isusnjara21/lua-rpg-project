@@ -11,6 +11,10 @@ function test:onLoad()
 end
 
 function test:onUpdate(dt)
+    if self.scanned then
+        self.moveVec = vec(0, 0)
+        self.scanned = nil
+    end
     --Logger.log(app.ACTIVE_SCENE.nodes[1].SpriteRenderer)
     self.moveVec:normalize()
     self.moveVec:rotate(self.node.Transform.rotation)
@@ -57,6 +61,32 @@ function test:onInput(event)
         app.ACTIVE_SCENE:unloadNode(app.ACTIVE_SCENE.nodes[1])
     elseif event == "j" then
         app.ACTIVE_SCENE.nodes[1]:load()
+    elseif event == "c" then
+        local obb = {
+            type = "obb",
+            offset = vec(0, 0),
+            collider_data = {
+                size = vec(16, 16)
+            },
+            layer = "empty2",
+            mask = {empty2 = true},
+            tag = {}
+        }
+        obb.getShape = function()
+            return {
+                center = self.node.Transform.position,
+                size = vec(16, 16),
+                rotation = 0
+            }
+        end
+
+        local hit = app.COLLISION:cast(obb, vec.DOWN, 10, 1)
+        if #hit > 0 then
+            Logger.log(hit[1])
+            self.scanned = true
+        else
+            self.scanned = nil
+        end
     end
 end
 
