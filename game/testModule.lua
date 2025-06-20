@@ -35,7 +35,7 @@ function test:onExitCollision(collider)
 end
 
 function test:onCollision(collider)
-    Logger.log(collider)
+    Logger.log(collider.tag)
 end
 
 function test:onInput(event)

@@ -5,13 +5,20 @@ function Collision:init()
 end
 
 function Collision:register(collider)
-    table.insert(self.COLLIDERS, collider)
+    local layer = collider.layer or "default" -- defaults to 'default' if you dont specify a layer (this doesnt mean it will interact with all layers, just a generic layer)
+    if not self.COLLIDERS[layer] then
+        self.COLLIDERS[layer] = {}
+    end
+    table.insert(self.COLLIDERS[layer], collider)
 end
 
 function Collision:unregister(collider)
-    for i = #self.COLLIDERS, 1, -1 do
-        if self.COLLIDERS[i] == collider then
-            table.remove(self.COLLIDERS, i)
+    local layer = collider.layer or "default"
+    local layerColliders = self.COLLIDERS[layer]
+
+    for i = #layerColliders, 1, -1 do
+        if layerColliders[i] == collider then
+            table.remove(layerColliders, i)
             break
         end
     end
@@ -38,26 +45,39 @@ function Collision:update()
             }
         end
     end
-    for i = 1, #self.COLLIDERS do
-        local a = self.COLLIDERS[i]
-        local aShape = getScaledShape(a)
-        if aShape then
-            for j = i + 1, #self.COLLIDERS do
-                local b = self.COLLIDERS[j]
-                local bShape = getScaledShape(b)
-                if bShape then
-                    local isColliding = self:checkCollision(aShape, bShape)
-                    local collision_key = self:_createCollisionKey(a, b)
-                    if isColliding then
-                        if not self.COLLISIONS[collision_key] then
-                            self:_dispatch(a, b, "onEnterCollision")
-                            self.COLLISIONS[collision_key] = true
-                        else
-                            self:_dispatch(a, b, "onCollision")
+
+    local seen = {}
+    for layerA, collidersA in pairs(self.COLLIDERS) do
+        seen[layerA] = true
+        for layerB, collidersB in pairs(self.COLLIDERS) do
+            if not seen[layerB] or layerA == layerB then
+                for _, a in ipairs(collidersA) do
+                    for _, b in ipairs(collidersB) do
+                        if a ~= b then
+                            local aMask = (not a.mask) or (a.mask[b.layer]) or (a.layer == b.layer)
+                            local bMask = (not b.mask) or (b.mask[a.layer]) or (a.layer == b.layer)
+
+                            if aMask and bMask then
+                                local aShape = getScaledShape(a)
+                                local bShape = getScaledShape(b)
+                                if aShape and bShape then
+                                    local isColliding = self:checkCollision(aShape, bShape)
+                                    local collision_key = self:_createCollisionKey(a, b)
+
+                                    if isColliding then
+                                        if not self.COLLISIONS[collision_key] then
+                                            self:_dispatch(a, b, "onEnterCollision")
+                                            self.COLLISIONS[collision_key] = true
+                                        else
+                                            self:_dispatch(a, b, "onCollision")
+                                        end
+                                    elseif self.COLLISIONS[collision_key] then
+                                        self:_dispatch(a, b, "onExitCollision")
+                                        self.COLLISIONS[collision_key] = nil
+                                    end
+                                end
+                            end
                         end
-                    elseif self.COLLISIONS[collision_key] then
-                        self:_dispatch(a, b, "onExitCollision")
-                        self.COLLISIONS[collision_key] = nil
                     end
                 end
             end

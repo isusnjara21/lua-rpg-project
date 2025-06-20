@@ -23,9 +23,9 @@ function testScene:create()
             collider_data = {
                 size = vec(16, 16)
             },
-            layer = "",
-            masks = {},
-            tags = {}
+            layer = "empty",
+            mask = {empty2 = true},
+            tag = {}
         }
     )
 
@@ -50,13 +50,18 @@ function testScene:create()
     empty2:setModule(app.ref.modules.SpriteRenderer())
     empty2.SpriteRenderer = empty2.modules.SpriteRenderer
     empty2:setModule(app.ref.modules.Collider())
-    empty2.modules.Collider:fromData({
-        type = "obb",
+    empty2.modules.Collider:fromData(
+        {
+            type = "obb",
             offset = vec(0, 0),
             collider_data = {
                 size = vec(40, 40)
-            }
-    })
+            },
+            layer = "empty2",
+            tag = {square = true},
+            mask = {empty = true}
+        }
+    )
     empty2.position:set(300, 359)
     empty2.scale:set(10, 10)
     empty2.Transform:setRotation(0.7)
@@ -67,10 +72,9 @@ function testScene:create()
     local tilemap = app.ref.dynamic["tileMapTest"]
 
     self:putNode(tilemap)
-    
+
     local sheet = app.ref.dynamic["Sheet"]
     self:putNode(sheet)
-
 end
 
 return testScene

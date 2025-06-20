@@ -13,9 +13,9 @@ function Collider:init()
         size = vec(1, 1)
     }
 
-    self.layer = ""
+    self.layer = "" -- very sensitive naming
     self.mask = {}
-    self.tags = {}
+    self.tag = {}
 
     self.debug_color = {1, 1, 0}
 end
@@ -36,8 +36,20 @@ function Collider:fromData(data)
     self.offset = data.offset
     self.collider_data = data.collider_data
     self.layer = data.layer
-    self.masks = data.masks
-    self.tags = data.tags
+    self.mask = data.mask
+    self.tag = data.tag
+end
+
+function Collider:addTag(tag)
+    if not self.tag[tag] then
+        self.tag[tag] = true
+    end
+end
+
+function Collider:removeTag(tag)
+    if self.tag[tag] then
+        self.tag[tag] = nil
+    end
 end
 
 function Collider:onDebugDraw()
