@@ -30,22 +30,6 @@ function Collision:pop()
 end
 
 function Collision:update()
-    local function getScaledShape(collider)
-        local shape = collider:getShape()
-        if collider.type == "circle" then
-            return {
-                center = shape.center,
-                radius = shape.radius * app.global_scale
-            }
-        elseif collider.type == "obb" then
-            return {
-                center = shape.center,
-                size = shape.size:scale(app.global_scale),
-                rotation = shape.rotation
-            }
-        end
-    end
-
     local seen = {}
     for layerA, collidersA in pairs(self.COLLIDERS) do
         seen[layerA] = true
@@ -53,28 +37,23 @@ function Collision:update()
             if not seen[layerB] or layerA == layerB then
                 for _, a in ipairs(collidersA) do
                     for _, b in ipairs(collidersB) do
-                        if a ~= b then
-                            local aMask = (not a.mask) or (a.mask[b.layer]) or (a.layer == b.layer)
-                            local bMask = (not b.mask) or (b.mask[a.layer]) or (a.layer == b.layer)
+                        if a ~= b and self:_checkMask(a, b) then
+                            local aShape = self:_getScaledShape(a)
+                            local bShape = self:_getScaledShape(b)
+                            if aShape and bShape then
+                                local isColliding = self:checkCollision(aShape, bShape)
+                                local collision_key = self:_createCollisionKey(a, b)
 
-                            if aMask and bMask then
-                                local aShape = getScaledShape(a)
-                                local bShape = getScaledShape(b)
-                                if aShape and bShape then
-                                    local isColliding = self:checkCollision(aShape, bShape)
-                                    local collision_key = self:_createCollisionKey(a, b)
-
-                                    if isColliding then
-                                        if not self.COLLISIONS[collision_key] then
-                                            self:_dispatch(a, b, "onEnterCollision")
-                                            self.COLLISIONS[collision_key] = true
-                                        else
-                                            self:_dispatch(a, b, "onCollision")
-                                        end
-                                    elseif self.COLLISIONS[collision_key] then
-                                        self:_dispatch(a, b, "onExitCollision")
-                                        self.COLLISIONS[collision_key] = nil
+                                if isColliding then
+                                    if not self.COLLISIONS[collision_key] then
+                                        self:_dispatch(a, b, "onEnterCollision")
+                                        self.COLLISIONS[collision_key] = true
+                                    else
+                                        self:_dispatch(a, b, "onCollision")
                                     end
+                                elseif self.COLLISIONS[collision_key] then
+                                    self:_dispatch(a, b, "onExitCollision")
+                                    self.COLLISIONS[collision_key] = nil
                                 end
                             end
                         end
@@ -95,6 +74,84 @@ function Collision:checkCollision(a, b)
     else
         return self:_obb_obb(a, b)
     end
+end
+
+function Collision:cast(testCollider, direction, distance, step)
+    local hits = {}
+    local steps = math.floor(distance / step)
+    local shapeType = testCollider.type
+
+    for s = 1, steps do
+        local moveVec = direction:clone() * (s * step)
+        local testShape = self:_getMovedShape(testCollider, moveVec)
+
+        for _, collider in ipairs(self:getAllColliders()) do
+            if self:_checkMask(testCollider, collider) then
+                local otherShape = self:_getScaledShape(collider)
+                if self:checkCollision(testShape, otherShape) then
+                    table.insert(hits, {collider = collider, distance = s * step})
+                    break
+                end
+            end
+        end
+
+        if #hits > 0 then break end
+    end
+
+    return hits
+end
+
+function Collision:getAllColliders()
+    local allColliders = {}
+
+    for _, colliders in pairs(self.COLLIDERS) do
+        for _, collider in ipairs(colliders) do
+            table.insert(allColliders, collider)
+        end 
+    end
+
+    return allColliders
+end
+
+function Collision:_getMovedShape(collider, offset)
+    local shape = collider:getShape()
+    local movedShap = {}
+
+    if collider.type == "circle" then
+        movedShape = {
+            center = shape.center + offset,
+            radius = shape.radius * app.global_scale
+        }
+    elseif collider.type == "obb" then
+        movedShape = {
+            center = shape.center + offset,
+            size = shape.size:scale(app.global_scale),
+            rotation = shape.rotation
+        }
+    end
+
+    return movedShape
+end
+
+function Collision:_getScaledShape(collider)
+    local shape = collider:getShape()
+    if collider.type == "circle" then
+        return {
+            center = shape.center,
+            radius = shape.radius * app.global_scale
+        }
+    elseif collider.type == "obb" then
+        return {
+            center = shape.center,
+            size = shape.size:scale(app.global_scale),
+            rotation = shape.rotation
+        }
+    end
+end
+
+function Collision:_checkMask(a, b)
+    return (not a.mask or a.mask[b.layer] or a.layer == b.layer) and
+        (not b.mask or b.mask[a.layer] or a.layer == b.layer)
 end
 
 function Collision:_circle_circle(a, b)
