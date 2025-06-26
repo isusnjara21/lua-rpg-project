@@ -76,11 +76,18 @@ function test:onInput(event)
             return {
                 center = self.node.Transform.position,
                 size = vec(16, 16),
-                rotation = 0
+                rotation = self.node.modules.Transform.rotation
             }
         end
-
-        local hit = app.COLLISION:cast(obb, vec.DOWN, 10, 1)
+        obb.getRotation = function()
+            return self.node.modules.Transform.rotation or 0
+        end
+        obb.getWorldPosition = function ()
+            return self.node.modules.Transform.position + obb.offset
+        end
+        local dir = vec.DOWN:clone()
+        dir:rotate(self.node.modules.Transform.rotation)
+        local hit = app.COLLISION:cast(obb, dir, 10, 5)
         if #hit > 0 then
             Logger.log(hit[1])
             self.scanned = true

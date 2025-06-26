@@ -85,6 +85,9 @@ function Collision:cast(testCollider, direction, distance, step)
         local moveVec = direction:clone() * (s * step)
         local testShape = self:_getMovedShape(testCollider, moveVec)
 
+        -- debug
+        table.insert(app.RENDERER.DEBUG_SHAPES, testShape)
+
         for _, collider in ipairs(self:getAllColliders()) do
             if self:_checkMask(testCollider, collider) then
                 local otherShape = self:_getScaledShape(collider)
@@ -95,9 +98,10 @@ function Collision:cast(testCollider, direction, distance, step)
             end
         end
 
-        if #hits > 0 then break end
+        if #hits > 0 then
+            break
+        end
     end
-
     return hits
 end
 
@@ -107,7 +111,7 @@ function Collision:getAllColliders()
     for _, colliders in pairs(self.COLLIDERS) do
         for _, collider in ipairs(colliders) do
             table.insert(allColliders, collider)
-        end 
+        end
     end
 
     return allColliders

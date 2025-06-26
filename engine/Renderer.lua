@@ -9,7 +9,7 @@ function Renderer:init()
         return a.modules.SpriteRenderer.z_index < b.modules.SpriteRenderer.z_index
     end
 
-    
+    self.DEBUG_SHAPES = {}
 end
 
 function Renderer:draw_call()
@@ -59,8 +59,12 @@ function Renderer:draw_call()
                 end
             end
         end
-    end
 
+        for _, shape in pairs(self.DEBUG_SHAPES) do
+            self:debug_draw(shape)
+        end
+        self.DEBUG_SHAPES = {}
+    end
 
     love.graphics.setCanvas()
 
@@ -130,4 +134,20 @@ function Renderer:isVisible(node)
 
     return not (pos.x + size.x < 0 or pos.x - size.x > app.screen.x or pos.y + size.y < 0 or
         pos.y - size.y > app.screen.y)
+end
+
+-- temp debug
+
+function Renderer:debug_draw(shape)
+    local camPosition = app.camera.Transform.position
+    local camOffset = app.screen / vec(2, 2)
+    local camRotation = app.camera.Transform.rotation
+    camOffset:rotate(camRotation)
+    camPosition = camPosition - camOffset
+
+    love.graphics.setColor(1, 0, 0)
+    local pos = util.WorldToScreen(shape.center, camPosition, camRotation)
+    love.graphics.circle("line", pos.x, pos.y, 8)
+
+    love.graphics.setColor(1, 1, 1)
 end
