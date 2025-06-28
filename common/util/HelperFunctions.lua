@@ -25,6 +25,10 @@ function util.WorldToScreen(worldPos, camPos, camRot)
     return rotatedScreenPos
 end
 
+function util.lerp(start, stop, amount)
+    return start + (stop - start) * amount
+end
+
 function util.__parseArgs(arg)
     local args = {}
     local skip_next = false
