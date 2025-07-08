@@ -10,7 +10,7 @@ function testScene:create()
 
     local player = app.ref.nodes.Sprite()
 
-    player.SpriteRenderer:fromData(app.ref.sprites.Player)
+    player.SpriteRenderer:fromData(app.ref.sprites.Sheet)
 
     player:setModule(app.ref.modules.test())
     player:setModule(app.ref.modules.testCam())
@@ -30,6 +30,12 @@ function testScene:create()
     )
 
     player.SpriteRenderer.z_index = 1
+
+    player:setModule(app.ref.modules.AnimationState())
+    local playerIdle = function (node, state) if node.modules.test.moveVec.x == 0 and node.modules.test.moveVec.y == 0 then return true else return false end end
+    local playerRunning = function (node, state) if node.modules.test.moveVec.x == 0 and node.modules.test.moveVec.y == 0 then return false else return true end end
+    player.modules.AnimationState:setState('idle', 'sequence1', playerIdle)
+    player.modules.AnimationState:setState('running', 'sequence2', playerRunning)
     self:putNode(player)
 
     local empty = Node()

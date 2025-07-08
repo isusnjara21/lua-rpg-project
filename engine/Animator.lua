@@ -31,7 +31,15 @@ function Animator:update(dt)
     for i = 1, #self.ANIMATIONS do
         local animation = self.ANIMATIONS[i]
         animation.dt = animation.dt + dt
-        local currentAnimationTimings =animation.module.animation[animation.current].timings
+        if animation.__change_anim then
+            animation.current = animation.__change_anim
+            animation.__change_anim = nil
+            animation.current_frame = #animation.module.animation[animation.current].frames
+            if not animation.__wait_for_frame then
+                self:nextFrame(animation)
+            end
+        end
+        local currentAnimationTimings = animation.module.animation[animation.current].timings
         if type(currentAnimationTimings) == 'table' then
             if animation.dt >= currentAnimationTimings[animation.current_frame] then
                 animation.dt = animation.dt - currentAnimationTimings[animation.current_frame]
@@ -47,6 +55,8 @@ function Animator:update(dt)
     end
 end
 
+
+-- TO DO: animation event dispatching
 function Animator:nextFrame(animation)
     local ref = animation.module.animation[animation.current]
     local frameCount = #ref.frames
@@ -70,4 +80,17 @@ function Animator:nextFrame(animation)
     animation.module.frame = next_frame
 
     animation.module:updateFrame() -- schedules update
+end
+
+function Animator:change_animation(mod, animation, flags)
+    local flags = flags or nil
+    for i = #self.ANIMATIONS, 1, -1 do
+        if self.ANIMATIONS[i].module == mod then
+            self.ANIMATIONS[i].__change_anim = animation
+            if flags then
+                self.ANIMATIONS[i].__wait_for_frame = flags.__on_frame_end or nil
+            end
+            break
+        end
+    end
 end

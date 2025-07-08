@@ -52,6 +52,10 @@ function SpriteRenderer:updateFrame()
     self.__frame_update = true
 end
 
+function SpriteRenderer:updateAnimation(animation)
+    app.ANIMATOR:change_animation(self, animation)
+end
+
 function SpriteRenderer:sheetToFrames()
     local sheet = app.IMAGE:load(self.path)
     local frames = app.IMAGE:split(sheet, self.frame_size, self.size)
