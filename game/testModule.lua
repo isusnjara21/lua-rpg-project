@@ -97,6 +97,12 @@ function test:onInput(event)
     end
 end
 
+function test:onUpdateFrame(animation, frame)
+end
+
+function test:onChangeAnimation(from, to)
+end
+
 function test:toString()
     return "test"
 end

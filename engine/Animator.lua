@@ -32,33 +32,38 @@ function Animator:update(dt)
         local animation = self.ANIMATIONS[i]
         animation.dt = animation.dt + dt
         if animation.__change_anim then
+            local animationChange = {animation.current, animation.__change_anim} 
+
             animation.current = animation.__change_anim
             animation.__change_anim = nil
             animation.current_frame = #animation.module.animation[animation.current].frames
             if not animation.__wait_for_frame then
                 self:nextFrame(animation)
+                app.ACTIVE_SCENE:dispatch({animation.module.node}, 'onUpdateFrame', {animation.current, animation.current_frame})
             else
                 animation.__wait_for_frame = nil
             end
+
+            app.ACTIVE_SCENE:dispatch({animation.module.node}, 'onChangeAnimation', animationChange)
         end
         local currentAnimationTimings = animation.module.animation[animation.current].timings
         if type(currentAnimationTimings) == 'table' then
             if animation.dt >= currentAnimationTimings[animation.current_frame] then
                 animation.dt = animation.dt - currentAnimationTimings[animation.current_frame]
                 self:nextFrame(animation)
+                app.ACTIVE_SCENE:dispatch({animation.module.node}, 'onUpdateFrame', {animation.current, animation.current_frame})
             end
         else
             if animation.dt >= currentAnimationTimings then
                 animation.dt = animation.dt - currentAnimationTimings
                 self:nextFrame(animation)
+                app.ACTIVE_SCENE:dispatch({animation.module.node}, 'onUpdateFrame', {animation.current, animation.current_frame})
             end
         end
-
     end
 end
 
 
--- TO DO: animation event dispatching
 function Animator:nextFrame(animation)
     local ref = animation.module.animation[animation.current]
     local frameCount = #ref.frames

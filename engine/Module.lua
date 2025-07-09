@@ -45,7 +45,7 @@ end
 function Module:onUpdateFrame(animation, frame)
 end
 
-function Module:onChangeAnimation(animation) -- should it be (from, to) ?
+function Module:onChangeAnimation(animationFrom, animationTo) -- should it be (from, to) ? or (to)
 end
 
 function Module:toString()
