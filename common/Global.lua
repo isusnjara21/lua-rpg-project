@@ -5,6 +5,10 @@ function App:global()
     self.__RUNTIME = "release"
 
     self.ref = asset_ref()
+    
+    -- not necessarily used, just a cool feature to include outside bits of code for now, and is able to be hot reloaded kind of
+    -- will be used for enabling services in the future
+    self.plugin = {}
 
     -- window
     self.global_scale = 1

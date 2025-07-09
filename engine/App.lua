@@ -23,6 +23,7 @@ function App:load()
     self.ACTIVE_SCENE = {}
 
     self:change_scene(self.ref.scenes.test2)
+    self:__load_plugins()
 
     self.__dt_accumulator = 0
 end
@@ -90,4 +91,18 @@ function App:change_scene(__scene)
         end
     end
     --]]
+end
+
+function App:__load_plugins()
+    local lfs = require("lfs") -- temporary
+
+    self.plugin = {}
+
+    for file in lfs.dir('lib/plugin') do
+        if file ~= '.' and file ~= '..' and file:match('%.lua$') then
+            local pluginName = file:sub(1, -5)
+            local requirePath = "lib.plugin." .. pluginName
+            self.plugin[pluginName] = require(requirePath)
+        end
+    end
 end
