@@ -26,8 +26,10 @@ function asset_ref:create_references()
 
     -- SCENES -- WIP
     self.scenes = {
+
         test = require("game.testScene"),
-        test2 = require("game.testScene2")
+
+        MainScene = require("game.testScene2")
     }
 
     -- [[ TABLES ]]
