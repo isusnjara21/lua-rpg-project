@@ -46,13 +46,19 @@ function Collision:update()
 
                                 if isColliding then
                                     if not self.COLLISIONS[collision_key] then
-                                        self:_dispatch(a, b, "onEnterCollision")
+                                        --self:_dispatch(a, b, "onEnterCollision")
+                                        app.ACTIVE_SCENE:dispatch({a.node}, "onEnterCollision", {b})
+                                        app.ACTIVE_SCENE:dispatch({b.node}, "onEnterCollision", {a})
                                         self.COLLISIONS[collision_key] = true
                                     else
-                                        self:_dispatch(a, b, "onCollision")
+                                        --self:_dispatch(a, b, "onCollision")
+                                        app.ACTIVE_SCENE:dispatch({a.node}, "onCollision", {b})
+                                        app.ACTIVE_SCENE:dispatch({b.node}, "onCollision", {a})
                                     end
                                 elseif self.COLLISIONS[collision_key] then
-                                    self:_dispatch(a, b, "onExitCollision")
+                                    --self:_dispatch(a, b, "onExitCollision")
+                                    app.ACTIVE_SCENE:dispatch({a.node}, "onExitCollision", {b})
+                                    app.ACTIVE_SCENE:dispatch({b.node}, "onExitCollision", {a})
                                     self.COLLISIONS[collision_key] = nil
                                 end
                             end
@@ -237,6 +243,7 @@ function Collision:_createCollisionKey(a, b)
     return a.__id .. "_" .. b.__id
 end
 
+-- deprecated
 function Collision:_dispatch(a, b, method)
     for _, module in pairs(a.node.modules) do
         if module[method] then

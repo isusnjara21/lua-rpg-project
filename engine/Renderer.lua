@@ -52,13 +52,15 @@ function Renderer:draw_call()
     end
 
     if app.__RUNTIME == "debug" then
-        for _, node in pairs(self.DRAWABLE_OBJECTS) do
-            for _, module in pairs(node.modules) do
-                if module.onDebugDraw then
-                    module:onDebugDraw()
-                end
-            end
-        end
+        app.ACTIVE_SCENE:dispatch(self.DRAWABLE_OBJECTS, 'onDebugDraw', {})
+        --for _, node in pairs(self.DRAWABLE_OBJECTS) do
+            
+            --for _, module in pairs(node.modules) do
+            --    if module.onDebugDraw then
+            --        module:onDebugDraw()
+            --    end
+            --end
+        --end
 
         for _, shape in pairs(self.DEBUG_SHAPES) do
             self:debug_draw(shape)

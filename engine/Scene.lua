@@ -60,6 +60,25 @@ function Scene:lateUpdate(dt)
     end
 end
 
+-- targets are nodes
+function Scene:dispatch(targets, method, args)
+    for _, node in pairs(targets) do
+        for _, module in pairs(node.modules) do
+            if module[method] then
+                module[method](module, unpack(args))
+            end
+        end
+    end
+end
+
+function Scene:getAllNodes()
+    local nodes = {}
+    for node in self:activeNode_iterator() do
+        table.insert(nodes, node)
+    end
+    return nodes
+end
+
 function Scene:activeNode_iterator()
     local index = #self.nodes + 1
     return function()

@@ -37,6 +37,8 @@ function Animator:update(dt)
             animation.current_frame = #animation.module.animation[animation.current].frames
             if not animation.__wait_for_frame then
                 self:nextFrame(animation)
+            else
+                animation.__wait_for_frame = nil
             end
         end
         local currentAnimationTimings = animation.module.animation[animation.current].timings
