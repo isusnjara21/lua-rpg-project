@@ -61,6 +61,10 @@ function test:onInput(event)
         app.ACTIVE_SCENE:unloadNode(app.ACTIVE_SCENE.nodes[1])
     elseif event == "j" then
         app.ACTIVE_SCENE.nodes[1]:load()
+    elseif event == "t" then
+        app.global_scale = app.global_scale + 0.1
+    elseif event == "z" then
+        app.global_scale = app.global_scale - 0.1
     elseif event == "c" then
         local obb = {
             type = "obb",
