@@ -4,7 +4,7 @@ function testScene:create()
     local aaa = app.ref.nodes.Sprite()
     aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage, {override = true})
     aaa.SpriteRenderer.static = false
-    aaa.position:set(300, 300)
+    aaa.Transform:setWorldPosition(300, 300)
     aaa.SpriteRenderer.z_index = 3
     self:putNode(aaa)
 
