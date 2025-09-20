@@ -40,7 +40,7 @@ function TileMapBuilder:onLoad()
 end
 
 function TileMapBuilder:loadData(path)
-    self.data = {
+    self.data = { -- DOESNT WORK WIP
         {
             "Player",
             "Player",

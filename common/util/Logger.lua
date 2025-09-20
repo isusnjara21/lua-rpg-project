@@ -1,5 +1,6 @@
 Logger = {}
 function Logger.log(information)
+    if app.__RUNTIME ~= 'debug' then return end
     if type(information) == 'string' or type(information) == 'number' then
         app.stdout = app.stdout .. tostring(information) .. '\n'
     elseif type(information) == 'table' then
