@@ -34,6 +34,8 @@ function App:update(deltaTime)
 
     Logger.log(love.timer.getFPS())
 
+    self.global_scale = 1 / self.camera.zoom
+
     self.CONTROLLER:update()
 
     self.COLLISION:update()
@@ -81,7 +83,7 @@ function App:change_scene(__scene)
     self.COLLISION:pop()
     self.ACTIVE_SCENE = __scene()
 
-    app.camera.Transform.position:set(self.ACTIVE_SCENE.initial_camera_position.x, self.ACTIVE_SCENE.initial_camera_position.y, self.ACTIVE_SCENE.initial_camera_position.z)
+    app.camera.Transform.position:set(self.ACTIVE_SCENE.initial_camera_position.x, self.ACTIVE_SCENE.initial_camera_position.y)
     app.camera.Transform.rotation = 0
 
     -- NORMAL SPRITES

@@ -22,7 +22,7 @@ function Renderer:draw_call()
         if node.modules.SpriteRenderer and node.modules.Transform and not node.hidden then
             local worldPosition = node.modules.Transform.position
             local camPosition = app.camera.Transform.position
-            local camOffset = app.screen / vec(2, 2)
+            local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
             local camRotation = app.camera.Transform.rotation
             camOffset:rotate(camRotation)
             camPosition = camPosition - camOffset
@@ -142,7 +142,7 @@ end
 
 function Renderer:debug_draw(shape)
     local camPosition = app.camera.Transform.position
-    local camOffset = app.screen / vec(2, 2)
+    local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
     local camRotation = app.camera.Transform.rotation
     camOffset:rotate(camRotation)
     camPosition = camPosition - camOffset

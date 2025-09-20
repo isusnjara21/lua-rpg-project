@@ -22,7 +22,7 @@ function util.WorldToScreen(worldPos, camPos, camRot)
     local sin = math.sin(-camRot)
 
     local rotatedScreenPos = vec(screenPos.x * cos - screenPos.y * sin, screenPos.x * sin + screenPos.y * cos)
-    return rotatedScreenPos
+    return rotatedScreenPos * (app.global_scale)
 end
 
 function util.lerp(start, stop, amount)
