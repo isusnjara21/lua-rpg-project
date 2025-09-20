@@ -11,6 +11,9 @@ function test:onLoad()
 end
 
 function test:onUpdate(dt)
+    Logger.log(self.moveVec)
+    self.node.modules.AnimationState:setVariable('movementX', self.moveVec.x)
+    self.node.modules.AnimationState:setVariable('movementY', self.moveVec.y)
     if self.scanned then
         self.moveVec = vec(0, 0)
         self.scanned = nil
@@ -40,6 +43,10 @@ end
 
 function test:onCollision(collider)
     Logger.log(collider.tag)
+    
+    if collider:hasTag("square") then
+        Logger.log("Has square tag!")
+    end
 end
 
 function test:onInput(event)

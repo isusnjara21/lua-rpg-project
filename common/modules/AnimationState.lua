@@ -3,6 +3,8 @@ AnimationState = Module:extend()
 function AnimationState:init()
     self.currentState = nil
     self.states = {}
+
+    self.variable = {}
 end
 
 -- lambda(node, currentState)
@@ -15,6 +17,14 @@ function AnimationState:setState(name, animation, lambda, flags)
         flags = flags or nil
     }
     table.insert(self.states, state)
+end
+
+function AnimationState:createVariable(variable)
+    self.variable[variable] = 0
+end
+
+function AnimationState:setVariable(variable, value)
+    self.variable[variable] = value
 end
 
 function AnimationState:onLoad()

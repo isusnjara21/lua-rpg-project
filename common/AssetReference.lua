@@ -29,7 +29,7 @@ function asset_ref:create_references()
 
         test = require("game.testScene"),
 
-        MainScene = require("game.testScene2")
+        MainScene = require("game.mainScene")
     }
 
     -- [[ TABLES ]]

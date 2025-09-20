@@ -110,6 +110,22 @@ function Collider:getShape()
     end
 end
 
+function Collider:hasTag(tag)
+    if self.tag[tag] then
+        return true
+    else
+        return false
+    end
+end
+
+function Collider:getTags() -- WIP
+    local tags = ""
+    for tag, _ in pairs(self.tag) do
+        tags = tags .. tag .. " "
+    end
+    return tags
+end
+
 function Collider:toString()
     return "Collider"
 end

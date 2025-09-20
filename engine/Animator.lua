@@ -38,6 +38,7 @@ function Animator:update(dt)
             animation.__change_anim = nil
             animation.current_frame = #animation.module.animation[animation.current].frames
             if not animation.__wait_for_frame then
+                animation.dt = 0
                 self:nextFrame(animation)
                 app.ACTIVE_SCENE:dispatch({animation.module.node}, 'onUpdateFrame', {animation.current, animation.current_frame})
             else

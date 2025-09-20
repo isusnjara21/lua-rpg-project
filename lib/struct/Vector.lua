@@ -46,15 +46,31 @@ function Vector:clone()
 end
 
 function Vector.__add(a, b)
-    return vec(a.x + b.x, a.y + b.y)
+    if type(a) == 'table' and type(b) == 'table' and a.x and a.y and b.x and b.y then
+        return vec(a.x + b.x, a.y + b.y)
+    else
+        error('Cannot add Vector with a non-vector type')
+    end
 end
 
 function Vector.__sub(a, b)
-    return vec(a.x - b.x, a.y - b.y)
+    if type(a) == 'table' and type(b) == 'table' and a.x and a.y and b.x and b.y then
+        return vec(a.x - b.x, a.y - b.y)
+    else
+        error('Cannot subtract Vector with a non-vector type')
+    end
 end
 
 function Vector.__div(a, b)
-    return vec(a.x / b.x, a.y / b.y)
+    if type(a) == 'number' and type(b) == "table" and b.x and b.y then
+        rerror("Invalid operands for vector multiplication")
+    elseif type(b) == "number" and type(a) == "table" and a.x and a.y then
+        return vec(a.x / b, a.y / b)
+    elseif type(a) == "table" and type(b) == "table" and a.x and a.y and b.x and b.y then
+        return vec(a.x / b.x, a.y / b.y)
+    else
+        error("Invalid operands for vector multiplication")
+    end
 end
 
 function Vector.__mul(a, b)

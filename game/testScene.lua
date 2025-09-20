@@ -32,8 +32,10 @@ function testScene:create()
     player.SpriteRenderer.z_index = 1
 
     player:setModule(app.ref.modules.AnimationState())
-    local playerIdle = function (node, state) if node.modules.test.moveVec.x == 0 and node.modules.test.moveVec.y == 0 then return true else return false end end
-    local playerRunning = function (node, state) if node.modules.test.moveVec.x == 0 and node.modules.test.moveVec.y == 0 then return false else return true end end
+    player.modules.AnimationState:createVariable('movementX')
+    player.modules.AnimationState:createVariable('movementY')
+    local playerIdle = function (node, state) if node.modules.AnimationState.variable['movementX'] == 0 and node.modules.AnimationState.variable['movementY'] == 0 then return true else return false end end
+    local playerRunning = function (node, state) if node.modules.AnimationState.variable['movementX'] == 0 and node.modules.AnimationState.variable['movementY'] == 0 then return false else return true end end
     player.modules.AnimationState:setState('idle', 'sequence1', playerIdle)
     player.modules.AnimationState:setState('running', 'sequence2', playerRunning)
     self:putNode(player)

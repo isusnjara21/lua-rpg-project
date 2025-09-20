@@ -16,6 +16,11 @@ function love.load(arg)
         app.__RUNTIME = "debug"
     end
 
+    if args.editor or args.e then
+        print("Booting up editor...")
+        app.ref.scenes.MainScene = require('editor.editorScene')
+    end
+
     local window_size = app.screen
     if args.width or args.w then
         window_size.x = args.width or args.w
