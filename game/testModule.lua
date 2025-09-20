@@ -11,6 +11,8 @@ function test:onLoad()
 end
 
 function test:onUpdate(dt)
+    Logger.log({scale = app.global_scale})
+
     Logger.log(self.moveVec)
     self.node.modules.AnimationState:setVariable('movementX', self.moveVec.x)
     self.node.modules.AnimationState:setVariable('movementY', self.moveVec.y)
@@ -69,9 +71,9 @@ function test:onInput(event)
     elseif event == "j" then
         app.ACTIVE_SCENE.nodes[1]:load()
     elseif event == "t" then
-        app.global_scale = app.global_scale + 0.1
+        app.camera.zoom = app.camera.zoom + 0.01
     elseif event == "z" then
-        app.global_scale = app.global_scale - 0.1
+        app.camera.zoom = app.camera.zoom - 0.01
     elseif event == "c" then
         local obb = {
             type = "obb",

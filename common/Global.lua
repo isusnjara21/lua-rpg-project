@@ -20,7 +20,8 @@ function App:global()
 
     -- camera
     self.camera = {
-        Transform = self.ref.modules.Transform()
+        Transform = self.ref.modules.Transform(),
+        zoom = 1
     }
 end
 

@@ -54,7 +54,7 @@ end
 
 function Collider:onDebugDraw()
     local camPosition = app.camera.Transform.position
-    local camOffset = app.screen / vec(2, 2)
+    local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
     local camRotation = app.camera.Transform.rotation
     camOffset:rotate(camRotation)
     camPosition = camPosition - camOffset
@@ -64,10 +64,10 @@ function Collider:onDebugDraw()
     love.graphics.setColor(self.debug_color)
 
     if self.type == "circle" then
-        love.graphics.circle("line", pos.x, pos.y, self.collider_data.radius * app.global_scale)
+        love.graphics.circle("line", pos.x, pos.y, self.collider_data.radius)
         
     elseif self.type == "obb" then
-        local size = self.collider_data.size:scale(app.global_scale)
+        local size = self.collider_data.size
         local rot = self:getRotation()
         local hw, hh = size.x / 2, size.y / 2
         local corners = {
