@@ -13,10 +13,6 @@ function asset_ref:create_references()
         Collider = require("common.modules.Collider"),
         TileMapBuilder = require("common.modules.TileMapBuilder"),
         AnimationState = require("common.modules.AnimationState"),
-        
-        test = require("game.testModule"),
-        testCam = require("game.testCamModule"),
-        loader = require("game.loaderModule")
     }
 
     -- NODES
@@ -27,54 +23,37 @@ function asset_ref:create_references()
 
     -- SCENES -- WIP
     self.scenes = {
-        test = require("game.testScene"),
         MainScene = require("game.mainScene")
     }
 
     -- [[ TABLES ]]
     -- SPRITES
-    self.sprites = {
-        Player = {
-            path = "game/assets/Sprite-0001.png",
-            frame_size = vec(16, 16),
-            frame_origin = vec(8, 8),
-            static = false,
-            size = vec(1, 1)
-        },
-        Sheet = {
-            path = "game/assets/Sprite-0001-Sheet.png",
-            frame_size = vec(16, 16),
-            frame_origin = vec(8, 8),
-            static = true,
-            size = vec(16, 1),
-            animation = {
-                default = 'sequence1',
-                sequence1 = {
-                    looping = true,
-                    timings = 1,
-                    frames = {1, 2, 3, 4},
-                    --_after = 'sequence2'
-                },
-                sequence2 = {
-                    looping = true,
-                    timings = 1,
-                    frames = {16, 8, 4, 2, 1},
-                    --_after = 'sequence3'
-                },
-                sequence3 = {
-                    looping = false,
-                    timings = {1/6, 1/6, 1/6, 1/6, 1, 1, 1},
-                    frames = {5, 6, 7, 8, 10, 11, 12},
-                    --_after = 'sequence1' -- will default to 'default' if not defined, happens if no looping
-                    -- _stop = true -- will check for this if not looping, will freeze the animation at last frame until sequence changes
-                }
-            }, 
-        }
-    }
+    self.sprites = {}
 
     -- STACKED SPRITES
     self.stacked_sprites = {}
 
     -- SHARED STATE -- organized, managed and handled by game-side code
     self.dynamic = {}
+end
+
+
+function asset_ref:registerScene(_scene, _requirePath)
+    self.scenes[_scene] = require(_requirePath)
+end
+
+function asset_ref:registerModule(_module, _requirePath)
+    self.modules[_module] = require(_requirePath)
+end
+
+function asset_ref:registerPrefab(_prefab, _requirePath)
+    self.nodes[_prefab] = require(_requirePath)
+end
+
+function asset_ref:createSprite(_sprite, _spriteTable)
+    self.sprites[_sprite] = _spriteTable
+end
+
+function asset_ref:createStackedSprite(_stackedSprite, _spriteTable)
+    self.stacked_sprites[_stackedSprite] = _spriteTable
 end

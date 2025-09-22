@@ -19,6 +19,7 @@ function love.load(arg)
     if args.editor or args.e then
         print("Booting up editor...")
         app.ref.scenes.MainScene = require('editor.editorScene')
+        app.screen = vec(1920, 1080)
     end
 
     local window_size = app.screen

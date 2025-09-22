@@ -1,6 +1,50 @@
-testScene2 = Scene:extend()
+mainScene = Scene:extend()
 
-function testScene2:create()
+function mainScene:create()
+
+    app.ref:registerModule('test', "game.testModule")
+    app.ref:registerModule('testCam', "game.testCamModule")
+    app.ref:registerModule('loader', "game.loaderModule")
+    app.ref:registerScene('test', "game.testscene")
+    app.ref:createSprite('Player', {
+            path = "game/assets/Sprite-0001.png",
+            frame_size = vec(16, 16),
+            frame_origin = vec(8, 8),
+            static = false,
+            size = vec(1, 1)
+        })
+    app.ref:createSprite('Sheet', {
+            path = "game/assets/Sprite-0001-Sheet.png",
+            frame_size = vec(16, 16),
+            frame_origin = vec(8, 8),
+            static = true,
+            size = vec(16, 1),
+            animation = {
+                default = 'sequence1',
+                sequence1 = {
+                    looping = true,
+                    timings = 1,
+                    frames = {1, 2, 3, 4},
+                    --_after = 'sequence2'
+                },
+                sequence2 = {
+                    looping = true,
+                    timings = 1,
+                    frames = {16, 8, 4, 2, 1},
+                    --_after = 'sequence3'
+                },
+                sequence3 = {
+                    looping = false,
+                    timings = {1/6, 1/6, 1/6, 1/6, 1, 1, 1},
+                    frames = {5, 6, 7, 8, 10, 11, 12},
+                    --_after = 'sequence1' -- will default to 'default' if not defined, happens if no looping
+                    -- _stop = true -- will check for this if not looping, will freeze the animation at last frame until sequence changes
+                }
+            }, 
+        })
+
+
+        
     local loader = Node()
     loader:setModule(app.ref.modules.loader())
 
@@ -21,4 +65,4 @@ function testScene2:create()
     app.ref.dynamic["Sheet"] = sheet
 end
 
-return testScene2
+return mainScene

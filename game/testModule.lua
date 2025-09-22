@@ -75,6 +75,9 @@ function test:onInput(event)
         app.camera.zoom = app.camera.zoom + 0.01
     elseif event == "z" then
         app.camera.zoom = app.camera.zoom - 0.01
+        if app.camera.zoom <= 0.01 then
+            app.camera.zoom = 0.01
+        end
     elseif event == "c" then
         local obb = {
             type = "obb",
