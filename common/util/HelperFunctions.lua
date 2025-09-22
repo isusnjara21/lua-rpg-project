@@ -48,6 +48,15 @@ function util.AnimationStateAlias(node)
     node.AnimationState = node.modules.AnimationState
 end
 
+function util.AnimationAlias(node)
+    Generic.assertType(node, Node)
+    if not node.modules.Animation then
+        error("cannot create alias for Animation without there being a Animation module attached")
+    end
+
+    node.Animation = node.modules.Animation
+end
+
 function util.WorldToScreen(worldPos, camPos, camRot)
     Generic.assertType(worldPos, vec)
     Generic.assertType(camPos, vec)

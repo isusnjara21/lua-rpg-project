@@ -24,6 +24,7 @@ function Collider:setCollider(collider)
 end
 
 function Collider:onLoad()
+    self.node:requires(app.ref.modules.Transform)
     app.COLLISION:register(self)
 end
 

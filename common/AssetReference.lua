@@ -12,6 +12,7 @@ function asset_ref:create_references()
         SpriteRenderer = require("common.modules.SpriteRenderer"),
         Collider = require("common.modules.Collider"),
         TileMapBuilder = require("common.modules.TileMapBuilder"),
+        Animation = require("common.modules.Animation"),
         AnimationState = require("common.modules.AnimationState"),
     }
 

@@ -30,7 +30,7 @@ function testScene:create()
     )
 
     player.SpriteRenderer.z_index = 1
-
+    player:setModule(app.ref.modules.Animation())
     player:setModule(app.ref.modules.AnimationState())
     player.modules.AnimationState:createVariable('movementX')
     player.modules.AnimationState:createVariable('movementY')

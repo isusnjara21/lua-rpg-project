@@ -42,6 +42,8 @@ function App:update(deltaTime)
 
     self.ANIMATOR:update(self.TIME:get())
 
+    self.ACTIVE_SCENE:checkNodeDependencies()
+
     -- FIXED UPDATES
     self.__dt_accumulator = self.__dt_accumulator + self.TIME:get_raw() -- idk about this, 
     while self.__dt_accumulator >= self.TIME.fixedDeltaTime do

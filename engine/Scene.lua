@@ -68,6 +68,12 @@ function Scene:lateUpdate(dt)
     gameNode = {}
 end
 
+function Scene:checkNodeDependencies()
+    for node in self:activeNode_iterator() do
+        node:checkRequirement()
+    end
+end
+
 -- targets are nodes
 function Scene:dispatch(targets, method, args)
     for _, node in pairs(targets) do
@@ -78,6 +84,7 @@ function Scene:dispatch(targets, method, args)
             end
         end
     end
+    gameNode = {}
 end
 
 function Scene:getAllNodes()

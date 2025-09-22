@@ -28,6 +28,7 @@ function AnimationState:setVariable(variable, value)
 end
 
 function AnimationState:onLoad()
+    self.node:requires(app.ref.modules.Animation)
 end
 
 function AnimationState:onUnload()

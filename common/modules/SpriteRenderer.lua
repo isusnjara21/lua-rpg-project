@@ -16,6 +16,8 @@ function SpriteRenderer:init()
 end
 
 function SpriteRenderer:onLoad()
+    self.node:requires(app.ref.modules.Transform)
+
     if self.animation then
         app.ANIMATOR:register(self)
     end

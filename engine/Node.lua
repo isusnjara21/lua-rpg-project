@@ -81,11 +81,29 @@ function Node:getModules()
     return self.modules
 end
 
-function Node:find(module)
-    if self.modules[module] then 
-        return self.modules[module]
+function Node:find(_module)
+    if self.modules[_module] then 
+        return self.modules[_module]
     end
     error('Module not found')
+end
+
+function Node:requires(_module)
+    if not self.dependencies then
+        self.dependencies = {}
+    end
+    if not self.dependencies[_module():toString()] then
+        self.dependencies[_module():toString()] = _module
+    end
+end
+
+function Node:checkRequirement()
+    if not self.dependencies then return end
+    for name, module in pairs(self.dependencies) do
+        if not self.modules[name] then
+            error("A module of a Node requires the module " .. name ..".")
+        end
+    end
 end
 
 function Node:isDescendant(ancestor)

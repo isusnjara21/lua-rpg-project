@@ -8,7 +8,8 @@ function TileMapBuilder:init()
 end
 
 function TileMapBuilder:onLoad()
-    if not self.node.modules.SpriteRenderer then error("TileMapBuilder requires a SpriteRenderer") end
+    self.node:requires(app.ref.modules.Transform)
+    self.node:requires(app.ref.modules.SpriteRenderer)
 
     self.map = {}
     self.reference = {}
