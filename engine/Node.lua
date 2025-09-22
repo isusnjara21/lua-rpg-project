@@ -63,10 +63,29 @@ function Node:setModule(_module)
     Generic.assertType(_module, Module)
     self.modules[_module:toString()] = _module
     _module.node = self
+
+    if _module:toString() == app.ref.modules.Transform.toString() then
+        util.TransformAlias(self)
+    elseif _module:toString() == app.ref.modules.TileMapBuilder.toString() then
+        util.TileMapBuilderAlias(self)
+    elseif _module:toString() == app.ref.modules.SpriteRenderer.toString() then
+        util.SpriteRendererAlias(self)
+    elseif _module:toString() == app.ref.modules.Collider.toString() then
+        util.ColliderAlias(self)
+    elseif _module:toString() == app.ref.modules.AnimationState.toString() then
+        util.AnimationStateAlias(self)
+    end
 end
 
 function Node:getModules()
     return self.modules
+end
+
+function Node:find(module)
+    if self.modules[module] then 
+        return self.modules[module]
+    end
+    error('Module not found')
 end
 
 function Node:isDescendant(ancestor)

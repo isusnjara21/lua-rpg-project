@@ -26,3 +26,8 @@ function App:global()
 end
 
 app = App()
+
+
+-- global node reference
+
+gameNode = {}

@@ -27,8 +27,10 @@ end
 
 function Scene:load()
     for node in self:activeNode_iterator() do
+        gameNode = node
         node:load(dt)
     end
+    gameNode = {}
 end
 
 function Scene:unloadNode(node, arg)
@@ -44,25 +46,32 @@ end
 
 function Scene:update(dt)
     for node in self:activeNode_iterator() do
+        gameNode = node
         node:update(dt)
     end
+    gameNode = {}
 end
 
 function Scene:fixedUpdate(dt)
     for node in self:activeNode_iterator() do
+        gameNode = node
         node:fixedUpdate(dt)
     end
+    gameNode = {}
 end
 
 function Scene:lateUpdate(dt)
     for node in self:activeNode_iterator() do
+        gameNode = node
         node:lateUpdate(dt)
     end
+    gameNode = {}
 end
 
 -- targets are nodes
 function Scene:dispatch(targets, method, args)
     for _, node in pairs(targets) do
+        gameNode = node
         for _, module in pairs(node.modules) do
             if module[method] then
                 module[method](module, unpack(args))

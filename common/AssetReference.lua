@@ -13,6 +13,7 @@ function asset_ref:create_references()
         Collider = require("common.modules.Collider"),
         TileMapBuilder = require("common.modules.TileMapBuilder"),
         AnimationState = require("common.modules.AnimationState"),
+        
         test = require("game.testModule"),
         testCam = require("game.testCamModule"),
         loader = require("game.loaderModule")

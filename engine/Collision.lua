@@ -130,12 +130,12 @@ function Collision:_getMovedShape(collider, offset)
     if collider.type == "circle" then
         movedShape = {
             center = shape.center + offset,
-            radius = shape.radius * app.global_scale
+            radius = shape.radius
         }
     elseif collider.type == "obb" then
         movedShape = {
             center = shape.center + offset,
-            size = shape.size:scale(app.global_scale),
+            size = shape.size,
             rotation = shape.rotation
         }
     end
@@ -148,12 +148,12 @@ function Collision:_getScaledShape(collider)
     if collider.type == "circle" then
         return {
             center = shape.center,
-            radius = shape.radius * app.global_scale
+            radius = shape.radius
         }
     elseif collider.type == "obb" then
         return {
             center = shape.center,
-            size = shape.size:scale(app.global_scale),
+            size = shape.size,
             rotation = shape.rotation
         }
     end

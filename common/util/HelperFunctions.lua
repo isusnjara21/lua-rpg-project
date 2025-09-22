@@ -12,6 +12,42 @@ function util.TransformAlias(node)
     node.scale = node.Transform.scale
 end
 
+function util.TileMapBuilderAlias(node)
+    Generic.assertType(node, Node)
+    if not node.modules.TileMapBuilder then
+        error("cannot create alias for TileMapBuilder without there being a TileMapBuilder module attached")
+    end
+
+    node.TileMapBuilder = node.modules.TileMapBuilder
+end
+
+function util.SpriteRendererAlias(node)
+    Generic.assertType(node, Node)
+    if not node.modules.SpriteRenderer then
+        error("cannot create alias for SpriteRenderer without there being a SpriteRenderer module attached")
+    end
+
+    node.SpriteRenderer = node.modules.SpriteRenderer
+end
+
+function util.ColliderAlias(node)
+    Generic.assertType(node, Node)
+    if not node.modules.Collider then
+        error("cannot create alias for Collider without there being a Collider module attached")
+    end
+
+    node.Collider = node.modules.Collider
+end
+
+function util.AnimationStateAlias(node)
+    Generic.assertType(node, Node)
+    if not node.modules.AnimationState then
+        error("cannot create alias for AnimationState without there being a AnimationState module attached")
+    end
+
+    node.AnimationState = node.modules.AnimationState
+end
+
 function util.WorldToScreen(worldPos, camPos, camRot)
     Generic.assertType(worldPos, vec)
     Generic.assertType(camPos, vec)

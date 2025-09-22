@@ -14,8 +14,8 @@ function test:onUpdate(dt)
     Logger.log({scale = app.global_scale})
 
     Logger.log(self.moveVec)
-    self.node.modules.AnimationState:setVariable('movementX', self.moveVec.x)
-    self.node.modules.AnimationState:setVariable('movementY', self.moveVec.y)
+    gameNode.AnimationState:setVariable('movementX', self.moveVec.x)
+    gameNode.AnimationState:setVariable('movementY', self.moveVec.y)
     if self.scanned then
         self.moveVec = vec(0, 0)
         self.scanned = nil
@@ -23,8 +23,9 @@ function test:onUpdate(dt)
     --Logger.log(app.ACTIVE_SCENE.nodes[1].SpriteRenderer)
     self.moveVec:normalize()
     self.moveVec:rotate(self.node.Transform.rotation)
-    self.node.Transform:translate(self.moveVec.x * dt * self.speed, self.moveVec.y * dt * self.speed)
-    self.node.Transform:rotateDeg(-self.rotate * dt * self.rot_speed)
+    local transform = gameNode:find('Transform')
+    transform:translate(self.moveVec.x * dt * self.speed, self.moveVec.y * dt * self.speed)
+    transform:rotateDeg(-self.rotate * dt * self.rot_speed)
     self.moveVec.x = 0
     self.moveVec.y = 0
     self.rotate = 0
@@ -34,12 +35,12 @@ function test:onUpdate(dt)
 end
 
 function test:onEnterCollision(collider)
-    self.node.modules.Collider.debug_color = {0, 1, 0}
+    gameNode.Collider.debug_color = {0, 1, 0}
     collider.debug_color = {0, 0, 1}
 end
 
 function test:onExitCollision(collider)
-    self.node.modules.Collider.debug_color = {1, 1, 0}
+    gameNode.Collider.debug_color = {1, 1, 0}
     collider.debug_color = {1, 1, 0}
 end
 
@@ -87,19 +88,19 @@ function test:onInput(event)
         }
         obb.getShape = function()
             return {
-                center = self.node.Transform.position,
+                center = gameNode.Transform.position,
                 size = vec(16, 16),
-                rotation = self.node.modules.Transform.rotation
+                rotation = gameNode.Transform.rotation
             }
         end
         obb.getRotation = function()
-            return self.node.modules.Transform.rotation or 0
+            return gameNode.Transform.rotation or 0
         end
         obb.getWorldPosition = function ()
-            return self.node.modules.Transform.position + obb.offset
+            return gameNode.Transform.position + obb.offset
         end
         local dir = vec.DOWN:clone()
-        dir:rotate(self.node.modules.Transform.rotation)
+        dir:rotate(gameNode.Transform.rotation)
         local hit = app.COLLISION:cast(obb, dir, 10, 5)
         if #hit > 0 then
             Logger.log(hit[1])

@@ -1,5 +1,7 @@
 Transform = Module:extend()
 
+-- TO DO: make transform be relative to its parents Transform if parent has transform
+
 function Transform:init()
     self.position = vec(0, 0)
     self.rotation = 0

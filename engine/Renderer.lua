@@ -140,7 +140,7 @@ end
 
 -- temp debug
 
-function Renderer:debug_draw(shape)
+function Renderer:debug_draw(shape) -- VERY MUCH WIP
     local camPosition = app.camera.Transform.position
     local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
     local camRotation = app.camera.Transform.rotation
@@ -149,7 +149,7 @@ function Renderer:debug_draw(shape)
 
     love.graphics.setColor(1, 0, 0)
     local pos = util.WorldToScreen(shape.center, camPosition, camRotation)
-    love.graphics.circle("line", pos.x, pos.y, 8)
+    love.graphics.circle("line", pos.x, pos.y, 8 * app.global_scale)
 
     love.graphics.setColor(1, 1, 1)
 end
