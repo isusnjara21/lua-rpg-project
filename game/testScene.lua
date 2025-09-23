@@ -2,7 +2,7 @@ testScene = Scene:extend()
 
 function testScene:create()
     local aaa = app.ref.nodes.Sprite()
-    aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage, {override = true})
+    aaa.SpriteRenderer:setDirty(app.ref.dynamic.PlayerImage)
     aaa.SpriteRenderer.static = false
     aaa.Transform:setWorldPosition(300, 300)
     aaa.SpriteRenderer.z_index = 3
@@ -31,6 +31,7 @@ function testScene:create()
 
     player.SpriteRenderer.z_index = 1
     player:setModule(app.ref.modules.Animation())
+    player.modules.Animation:fromData(app.ref.animations.player)
     player:setModule(app.ref.modules.AnimationState())
     player.modules.AnimationState:createVariable('movementX')
     player.modules.AnimationState:createVariable('movementY')

@@ -7,7 +7,7 @@ end
 function Animator:register(mod)
     local animation = {
         module = mod,
-        current = mod.animation.default,
+        current = mod.animations.default,
         current_frame = 1,
         dt = 0
     }
@@ -36,7 +36,7 @@ function Animator:update(dt)
 
             animation.current = animation.__change_anim
             animation.__change_anim = nil
-            animation.current_frame = #animation.module.animation[animation.current].frames
+            animation.current_frame = #animation.module.animations[animation.current].frames
             if not animation.__wait_for_frame then
                 animation.dt = 0
                 self:nextFrame(animation)
@@ -47,7 +47,7 @@ function Animator:update(dt)
 
             app.ACTIVE_SCENE:dispatch({animation.module.node}, 'onChangeAnimation', animationChange)
         end
-        local currentAnimationTimings = animation.module.animation[animation.current].timings
+        local currentAnimationTimings = animation.module.animations[animation.current].timings
         if type(currentAnimationTimings) == 'table' then
             if animation.dt >= currentAnimationTimings[animation.current_frame] then
                 animation.dt = animation.dt - currentAnimationTimings[animation.current_frame]
@@ -66,7 +66,7 @@ end
 
 
 function Animator:nextFrame(animation)
-    local ref = animation.module.animation[animation.current]
+    local ref = animation.module.animations[animation.current]
     local frameCount = #ref.frames
 
     if animation.current_frame == frameCount and not ref.looping then
@@ -75,7 +75,7 @@ function Animator:nextFrame(animation)
             animation.current = ref._after
             animation.current_frame = 1
         else
-            animation.current = animation.module.animation.default
+            animation.current = animation.module.animations.default
             animation.current_frame = 1
         end
     elseif animation.current_frame == frameCount and ref.looping then
@@ -83,7 +83,7 @@ function Animator:nextFrame(animation)
     else
         animation.current_frame = animation.current_frame + 1
     end
-    local next_frame = animation.module.animation[animation.current].frames[animation.current_frame]
+    local next_frame = animation.module.animations[animation.current].frames[animation.current_frame]
 
     animation.module.frame = next_frame
 

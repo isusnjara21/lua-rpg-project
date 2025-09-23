@@ -31,26 +31,14 @@ function AnimationState:onLoad()
     self.node:requires(app.ref.modules.Animation)
 end
 
-function AnimationState:onUnload()
-end
-
-function AnimationState:onDestroy()
-end
-
 function AnimationState:onUpdate(deltaTime)
     Logger.log(self.currentState)
     for _, state in ipairs(self.states) do
         if self.currentState ~= state and state.lambda(self.node, self.currentState) then
             self.currentState = state
-            self.node.modules.SpriteRenderer:updateAnimation(self.currentState.animation)
+            self.node.modules.Animation:updateAnimation(self.currentState.animation)
         end
     end
-end
-
-function AnimationState:onUpdateFrame(animation, frame)
-end
-
-function AnimationState:onChangeAnimation(animation)
 end
 
 function AnimationState:toString()

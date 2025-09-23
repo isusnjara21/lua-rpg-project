@@ -45,8 +45,8 @@ function Renderer:draw_call()
                 screenRotation,
                 scale.x * app.global_scale,
                 scale.y * app.global_scale,
-                node.modules.SpriteRenderer.frame_origin.x,
-                node.modules.SpriteRenderer.frame_origin.y
+                node.modules.SpriteRenderer.origin.x,
+                node.modules.SpriteRenderer.origin.y
             )
         end
     end
@@ -131,7 +131,7 @@ function Renderer:isVisible(node)
         app.camera.Transform.position,
         app.camera.Transform.rotation
     )
-    local size = node.modules.SpriteRenderer.frame_size * node.modules.Transform.scale * app.global_scale
+    local size = node.modules.SpriteRenderer.size * node.modules.Transform.scale * app.global_scale
     local halfScreen = app.screen / 2
 
     return not (pos.x + size.x < 0 or pos.x - size.x > app.screen.x or pos.y + size.y < 0 or

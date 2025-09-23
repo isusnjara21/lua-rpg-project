@@ -14,6 +14,7 @@ function asset_ref:create_references()
         TileMapBuilder = require("common.modules.TileMapBuilder"),
         Animation = require("common.modules.Animation"),
         AnimationState = require("common.modules.AnimationState"),
+        --RigidBody = require("common.modules.RigidBody"), -- not yet supported
     }
 
     -- NODES
@@ -31,6 +32,9 @@ function asset_ref:create_references()
     -- SPRITES
     self.sprites = {}
 
+    -- ANIMATIONS -- keyframes
+    self.animations = {}
+
     -- STACKED SPRITES
     self.stacked_sprites = {}
 
@@ -38,6 +42,8 @@ function asset_ref:create_references()
     self.dynamic = {}
 end
 
+
+-- endpoints
 
 function asset_ref:registerScene(_scene, _requirePath)
     self.scenes[_scene] = require(_requirePath)
@@ -53,6 +59,10 @@ end
 
 function asset_ref:createSprite(_sprite, _spriteTable)
     self.sprites[_sprite] = _spriteTable
+end
+
+function asset_ref:createAnimations(_anim, _animTable)
+    self.animations[_anim] = _animTable
 end
 
 function asset_ref:createStackedSprite(_stackedSprite, _spriteTable)
