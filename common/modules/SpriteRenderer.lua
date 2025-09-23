@@ -13,10 +13,8 @@ end
 
 function SpriteRenderer:onLoad()
     self.node:requires(app.ref.modules.Transform)
-    if self.__dirty then
-        self.image = self.__dirty_image
-        self.__dirty = false
-    else
+
+    if not self:applyDirty() then
         self.image = app.IMAGE:load(self.path)
     end
 end
@@ -28,8 +26,6 @@ end
 function SpriteRenderer:setDirty(image)
     self.__dirty = true
     self.__dirty_image = image
-
-    self.image = self.__dirty_image
 end
 
 function SpriteRenderer:applyDirty()

@@ -8,6 +8,9 @@ function testScene:create()
     aaa.SpriteRenderer.z_index = 3
     self:putNode(aaa)
 
+    self.initial_camera_position.x = 300
+    self.initial_camera_position.y = 300
+
     local player = app.ref.nodes.Sprite()
 
     player.SpriteRenderer:fromData(app.ref.sprites.Sheet)

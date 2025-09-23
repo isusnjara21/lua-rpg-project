@@ -1,7 +1,7 @@
 require "common.AssetReference"
 
 function App:global()
-    self.__VERSION = "0.0.3"
+    self.__VERSION = "v0.0.3/a"
     self.__RUNTIME = "release"
 
     self.ref = asset_ref()

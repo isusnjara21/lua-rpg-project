@@ -56,13 +56,15 @@ function mainScene:create()
     tilemap.Transform.position:set(10, 10)
     app.ref.dynamic["tileMapTest"] = tilemap
 
-    local PlayerImage = app.IMAGE:load(app.ref.sprites.Player.path)
-    app.ref.dynamic["PlayerImage"] = PlayerImage
+    local rawPlayerImage = app.IMAGE:load(app.ref.sprites.Player.path)
+    app.ref.dynamic["PlayerImage"] = rawPlayerImage
 
 
     local sheet = app.ref.nodes.Sprite()
     sheet.SpriteRenderer:fromData(app.ref.sprites.Sheet)
     sheet.SpriteRenderer.z_index = 2
+    sheet:setModule(app.ref.modules.Animation())
+    sheet.Animation:fromData(app.ref.animations.player)
     app.ref.dynamic["Sheet"] = sheet
 end
 

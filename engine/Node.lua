@@ -74,6 +74,8 @@ function Node:setModule(_module)
         util.ColliderAlias(self)
     elseif _module:toString() == app.ref.modules.AnimationState.toString() then
         util.AnimationStateAlias(self)
+    elseif _module:toString() == app.ref.modules.Animation.toString() then
+        util.AnimationAlias(self)
     end
 end
 
