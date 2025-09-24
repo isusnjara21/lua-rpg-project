@@ -1,6 +1,14 @@
 
 SpriteRenderer = Module:extend()
 
+SpriteRenderer.__serialize = {
+    path = {Type = 'String'},
+    size = {Type = 'Vector'},
+    origin = {Type = 'Vector'},
+    static = {Type = 'Boolean'},
+    z_index = {Type = 'Number'}
+}
+
 function SpriteRenderer:init()
     self.path = "common/textures/missing-texture.png"
 

@@ -111,3 +111,23 @@ function App:__load_plugins()
         end
     end
 end
+
+function App:__serialize(module)
+    local data = {}
+    if obj.__serialize then
+        for key, _ in ipairs(obj.__serialize) do
+            data[key] = obj[key]
+        end
+    end
+    return data
+end
+
+function App:__deserialize(module, data)
+    if obj.__serialize then
+        for _, key in ipairs(obj.__serialize) do
+            if data[key] ~= nil then
+                obj[key] = data[key]
+            end
+        end
+    end
+end

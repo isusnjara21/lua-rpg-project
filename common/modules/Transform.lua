@@ -2,6 +2,12 @@ Transform = Module:extend()
 
 -- TO DO: make transform be relative to its parents Transform if parent has transform
 
+Transform.__serialize = {
+    position = {Type = 'Vector'},
+    rotation = {Type = 'Number'},
+    scale = {Type = 'Vector'}
+}
+
 function Transform:init()
     self.position = vec(0, 0)
     self.rotation = 0
