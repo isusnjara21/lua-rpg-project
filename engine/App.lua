@@ -8,6 +8,8 @@ require "engine.Animator"
 require "engine.Collision"
 require "lib.struct.model.AnimationFactory"
 require "lib.struct.model.SpriteFactory"
+require "game.Game"
+
 
 App = Object:extend()
 
@@ -29,6 +31,8 @@ function App:load()
     self:change_scene(self.ref.scenes.MainScene)
 
     self.__dt_accumulator = 0
+
+    entry()
 end
 
 function App:update(deltaTime)
