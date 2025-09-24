@@ -3,9 +3,12 @@ Scene = Object:extend()
 function Scene:init(...)
     self.nodes = {}
     self.initial_camera_position = vec(0, 0)
+    self:_create(...)
     self:create(...)
-
     self:load()
+end
+
+function Scene:_create(...)
 end
 
 function Scene:create(...)

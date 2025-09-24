@@ -2,7 +2,8 @@
 -- game entry point, will switch to 'mainScene' after running this.
 -- use for declaring static assets like scripts(modules)
 
-function entry()
+function game_entry()
+    print("entry")
     app.ref:registerModule('test', "game.testModule")
     app.ref:registerModule('testCam', "game.testCamModule")
     app.ref:registerModule('loader', "game.loaderModule")
@@ -36,4 +37,10 @@ function entry()
                             :build()
 
     app.ref:createAnimations('player', playerAnimation)
+end
+
+function game_config(g) -- these are default values
+    g.resolution = vec(640,480)
+    g.scale = 1
+    g.version = ''
 end

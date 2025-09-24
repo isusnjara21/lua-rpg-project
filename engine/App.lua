@@ -28,11 +28,11 @@ function App:load()
 
     self:__load_plugins()
 
+    self:__game_entry()
+
     self:change_scene(self.ref.scenes.MainScene)
 
     self.__dt_accumulator = 0
-
-    entry()
 end
 
 function App:update(deltaTime)
@@ -85,11 +85,11 @@ function App:input_release(key)
     self.CONTROLLER:release_key(key)
 end
 
-function App:change_scene(__scene)
+function App:change_scene(__scene, args)
     self.RENDERER:pop()
     self.ANIMATOR:pop()
     self.COLLISION:pop()
-    self.ACTIVE_SCENE = __scene()
+    self.ACTIVE_SCENE = __scene(args)
 
     app.camera.Transform.position:set(self.ACTIVE_SCENE.initial_camera_position.x, self.ACTIVE_SCENE.initial_camera_position.y)
     app.camera.Transform.rotation = 0
@@ -134,4 +134,15 @@ function App:__deserialize(module, data)
             end
         end
     end
+end
+
+function App:__game_entry()
+    game_entry()
+
+    local config = {}
+    game_config(config)
+
+    app.screen = config.virtual_resolution or vec(640, 480)
+    app.global_scale = config.scale or 1
+    app.game_version = config.version or ''
 end

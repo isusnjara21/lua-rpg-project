@@ -1,6 +1,10 @@
 mainScene = Scene:extend()
 
-function mainScene:create()   
+-- editing the _create function is unsafe as editor will wipe and regenerate it when saving Scenes
+function mainScene:_create()   
+end
+
+function mainScene:create()
     local loader = Node()
     loader:setModule(app.ref.modules.loader())
 
