@@ -6,6 +6,8 @@ require "engine.Module"
 require "engine.Time"
 require "engine.Animator"
 require "engine.Collision"
+require "lib.struct.model.AnimationFactory"
+require "lib.struct.model.SpriteFactory"
 
 App = Object:extend()
 

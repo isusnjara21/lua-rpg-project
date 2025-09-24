@@ -19,31 +19,22 @@ function mainScene:create()
             static = true,
         })
 
-    app.ref:createAnimations('player', {
-            size = vec(16, 1),
-            keyframes = {
-                    default = 'sequence1',
-                    sequence1 = {
-                        looping = true,
-                        timings = 1,
-                        frames = {1, 2, 3, 4},
-                        --_after = 'sequence2'
-                    },
-                    sequence2 = {
-                        looping = true,
-                        timings = 1,
-                        frames = {16, 8, 4, 2, 1},
-                        --_after = 'sequence3'
-                    },
-                    sequence3 = {
-                        looping = false,
-                        timings = {1/6, 1/6, 1/6, 1/6, 1, 1, 1},
-                        frames = {5, 6, 7, 8, 10, 11, 12},
-                        --_after = 'sequence1' -- will default to 'default' if not defined, happens if no looping
-                        -- _stop = true -- will check for this if not looping, will freeze the animation at last frame until sequence changes
-                    }
-            } 
-        })
+    local playerAnimation = AnimationFactory()
+                            :size(vec(16,1))
+                            :keyframe('sequence1')
+                                :frames({1,2,3,4})
+                                :timings(1)
+                                :looping()
+                            :keyframe('sequence2')
+                                :frames({16, 8, 4, 2, 1})
+                                :timings(1)
+                                :looping()
+                            :keyframe('sequence3')
+                                :frames({5, 6, 7, 8, 10, 11, 12})
+                                :timings({1/6, 1/6, 1/6, 1/6, 1, 1, 1})
+                            :build()
+
+    app.ref:createAnimations('player', playerAnimation)
 
         
     local loader = Node()
