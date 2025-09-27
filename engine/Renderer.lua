@@ -20,23 +20,23 @@ function Renderer:draw_call()
 
     for _, node in pairs(self.DRAWABLE_OBJECTS) do
         if node.modules.SpriteRenderer and node.modules.Transform and not node.hidden then
-            local worldPosition = node.modules.Transform.position
-            local camPosition = app.camera.Transform.position
+            local worldPosition = node.modules.Transform:getAbsolutePosition()
+            local camPosition = app.camera.Transform:getAbsolutePosition()
             local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
-            local camRotation = app.camera.Transform.rotation
+            local camRotation = app.camera.Transform:getAbsoluteRotation()
             camOffset:rotate(camRotation)
             camPosition = camPosition - camOffset
 
             local position = util.WorldToScreen(worldPosition, camPosition, camRotation)
 
-            local worldRotation = node.modules.Transform.rotation
+            local worldRotation = node.modules.Transform:getAbsoluteRotation()
             local screenRotation = worldRotation - camRotation
 
             if node.modules.SpriteRenderer.static then
                 screenRotation = 0
             end
 
-            local scale = node.modules.Transform.scale
+            local scale = node.modules.Transform:getAbsoluteScale()
 
             love.graphics.draw(
                 node.modules.SpriteRenderer.image,
@@ -127,9 +127,9 @@ end
 function Renderer:isVisible(node)
     local pos =
         util.WorldToScreen(
-        node.modules.Transform.position,
-        app.camera.Transform.position,
-        app.camera.Transform.rotation
+        node.modules.Transform:getAbsolutePosition(),
+        app.camera.Transform:getAbsolutePosition(),
+        app.camera.Transform:getAbsoluteRotation()
     )
     local size = node.modules.SpriteRenderer.size * node.modules.Transform.scale * app.global_scale
     local halfScreen = app.screen / 2
@@ -141,7 +141,7 @@ end
 -- temp debug
 
 function Renderer:debug_draw(shape) -- VERY MUCH WIP
-    local camPosition = app.camera.Transform.position
+    local camPosition = app.camera.Transform:getAbsolutePosition()
     local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
     local camRotation = app.camera.Transform.rotation
     camOffset:rotate(camRotation)

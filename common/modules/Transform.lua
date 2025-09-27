@@ -54,6 +54,30 @@ function Transform:scale(x, y)
     self.scale.y = self.scale.y + ly
 end
 
+function Transform:getAbsolutePosition()
+    if self.node and self.node.parent and self.node.parent.modules.Transform then
+        return self.position + self.node.parent.modules.Transform:getAbsolutePosition()
+    else
+        return self.position
+    end
+end
+
+function Transform:getAbsoluteRotation()
+    if self.node and self.node.parent and self.node.parent.modules.Transform then
+        return self.rotation + self.node.parent.modules.Transform:getAbsoluteRotation()
+    else
+        return self.rotation
+    end
+end
+
+function Transform:getAbsoluteScale()
+    if self.node and self.node.parent and self.node.parent.modules.Transform then
+        return self.scale + self.node.parent.modules.Transform:getAbsoluteScale()
+    else
+        return self.scale
+    end
+end
+
 -- 1 world unit is 1 sprite pixel of a sprite that hasnt had its scale tampered with
 function Transform:setWorldPosition(x, y)
     local lx = x or 0

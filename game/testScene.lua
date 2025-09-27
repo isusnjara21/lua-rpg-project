@@ -53,7 +53,7 @@ function testScene:create()
     empty.Transform:setRotation(2)
 
     self:putNode(empty)
-
+    player:addChild(empty)
     local empty2 = Node()
     empty2:setModule(app.ref.modules.Transform())
     empty2:setModule(app.ref.modules.SpriteRenderer())
