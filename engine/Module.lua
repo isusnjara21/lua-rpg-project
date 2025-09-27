@@ -30,6 +30,9 @@ end
 function Module:onLateUpdate(deltaTime)
 end
 
+function Module:onLateFixedUpdate(fixedDeltaTime)
+end
+
 function Module:onCollision(collider)
 end
 

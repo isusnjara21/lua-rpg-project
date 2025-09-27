@@ -71,6 +71,14 @@ function Scene:lateUpdate(dt)
     gameNode = {}
 end
 
+function Scene:lateFixedUpdate(dt)
+    for node in self:activeNode_iterator() do
+        gameNode = node
+        node:lateFixedUpdate(dt)
+    end
+    gameNode = {}
+end
+
 function Scene:checkNodeDependencies()
     for node in self:activeNode_iterator() do
         node:checkRequirement()

@@ -4,10 +4,19 @@ function Time:init()
     self.time_scale = 1
     self.fixedDeltaTime = 1/60
     self.deltaTime = 0
+    self.fps = 0
+
+    self.counter = 0
 end
 
 function Time:__set(dt)
     self.deltaTime = dt
+    
+    self.counter = self.counter + dt
+    if self.counter >= 1 then
+        self.fps = math.floor(1/self.deltaTime)
+        self.counter = self.counter - 1
+    end
 end
 
 function Time:set_scale(time)
@@ -23,3 +32,6 @@ function Time:get_raw()
     return self.deltaTime
 end
 
+function Time:get_fps()
+    return self.fps
+end

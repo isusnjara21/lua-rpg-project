@@ -3,11 +3,10 @@
 -- use for declaring static assets like scripts(modules)
 
 function game_entry()
-    print("entry")
     app.ref:registerModule('test', "game.testModule")
     app.ref:registerModule('testCam', "game.testCamModule")
     app.ref:registerModule('loader', "game.loaderModule")
-    app.ref:registerScene('test', "game.testscene")
+    app.ref:registerScene('test', "game.testScene")
     app.ref:createSprite('Player', {
             path = "game/assets/Sprite-0001.png",
             size = vec(16, 16),

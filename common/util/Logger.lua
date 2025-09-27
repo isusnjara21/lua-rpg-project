@@ -1,8 +1,27 @@
 Logger = {}
 function Logger.log(information)
+    app.stdout = Logger.__write(information, app.stdout)
+end
+
+function Logger.error()
+    app.errout = Logger.__write(information, app.errout)
+end
+
+function Logger.warn()
+    app.wrnout = Logger.__write(information, app.wrnout)
+end
+
+function Logger.consoleWrite()
+    app.clsout = Logger.__write(information, app.clsout)
+end
+
+function Logger.__write(information, data)
     if app.__RUNTIME ~= 'debug' then return end
+
+    local out = data or ''
+
     if type(information) == 'string' or type(information) == 'number' then
-        app.stdout = app.stdout .. tostring(information) .. '\n'
+        out = out .. tostring(information) .. '\n'
     elseif type(information) == 'table' then
         local str = ""
         local is_array = true
@@ -25,8 +44,10 @@ function Logger.log(information)
             end
         end
 
-        app.stdout = app.stdout .. str
+        out = out .. str
     else
-        app.stdout = app.stdout .. "Unsupported type for Logging: " .. type(information) .. '\n'
+        out = out .. "Unsupported type for Logging: " .. type(information) .. '\n'
     end
+
+    return out
 end

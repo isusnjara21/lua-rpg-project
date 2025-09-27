@@ -43,6 +43,18 @@ function Node:lateUpdate(dt)
     end
 end
 
+function Node:lateFixedUpdate(dt)
+    for _, module in pairs(self.modules) do
+        if module.onFixedUpdate then
+            module:onLateFixedUpdate(dt)
+        end
+    end
+
+    for _, child in ipairs(self.children) do
+        child:lateFixedUpdate(dt)
+    end
+end
+
 function Node:load()
     for _, module in pairs(self.modules) do
         if module.onLoad then

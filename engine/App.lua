@@ -38,7 +38,7 @@ end
 function App:update(deltaTime)
     self.TIME:__set(deltaTime)
 
-    Logger.log(love.timer.getFPS())
+    Logger.log(self.TIME:get_fps())
 
     self.global_scale = 1 / self.camera.zoom
 
@@ -54,6 +54,7 @@ function App:update(deltaTime)
     self.__dt_accumulator = self.__dt_accumulator + self.TIME:get_raw() -- idk about this, 
     while self.__dt_accumulator >= self.TIME.fixedDeltaTime do
         self.ACTIVE_SCENE:fixedUpdate(self.TIME.fixedDeltaTime)
+        self.ACTIVE_SCENE:lateFixedUpdate(self.TIME.fixedDeltaTime)
         self.__dt_accumulator = self.__dt_accumulator - self.TIME.fixedDeltaTime
     end
 
