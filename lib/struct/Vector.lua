@@ -17,6 +17,7 @@ function Vector:set(x, y)
     self:enforceType(y)
     self.x = x
     self.y = y
+    return self
 end
 
 function Vector:normalize()
@@ -24,10 +25,11 @@ function Vector:normalize()
         return
     end
 
-    local length = math.sqrt(self.x ^ 2 + self.y ^ 2)
+    local length = self:length()
 
     self.x = self.x / length
     self.y = self.y / length
+    return self
 end
 
 function Vector:rotate(angle)
@@ -63,13 +65,13 @@ end
 
 function Vector.__div(a, b)
     if type(a) == 'number' and type(b) == "table" and b.x and b.y then
-        rerror("Invalid operands for vector multiplication")
+        error("Invalid operands for vector division")
     elseif type(b) == "number" and type(a) == "table" and a.x and a.y then
         return vec(a.x / b, a.y / b)
     elseif type(a) == "table" and type(b) == "table" and a.x and a.y and b.x and b.y then
         return vec(a.x / b.x, a.y / b.y)
     else
-        error("Invalid operands for vector multiplication")
+        error("Invalid operands for vector division")
     end
 end
 
@@ -91,6 +93,10 @@ end
 
 function Vector:dot(vector)
     return self.x * vector.x + self.y * vector.y
+end
+
+function Vector:length()
+    return math.sqrt(self.x * self.x + self.y * self.y)
 end
 
 local function freezeVector(v)
