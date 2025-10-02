@@ -12,7 +12,10 @@ end
 
 function test:onUpdate(dt)
     Logger.log({scale = app.global_scale})
-
+    Logger.log(util.WorldToScreen(
+        gameNode.Transform:getAbsolutePosition(),
+        app.camera.Transform:getAbsolutePosition(),
+        app.camera.Transform:getAbsoluteRotation()))
     Logger.log(self.moveVec)
     gameNode.AnimationState:setVariable('movementX', self.moveVec.x)
     gameNode.AnimationState:setVariable('movementY', self.moveVec.y)

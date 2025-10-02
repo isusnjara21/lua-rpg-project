@@ -62,7 +62,7 @@ function Node:load()
         end
     end
 
-    if app.RENDERER and self.modules.SpriteRenderer then
+    if app.RENDERER and (self.modules.SpriteRenderer or self.modules.UICanvas) then
         app.RENDERER:add(self)
     end
 

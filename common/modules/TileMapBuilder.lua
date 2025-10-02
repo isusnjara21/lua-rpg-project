@@ -36,8 +36,9 @@ function TileMapBuilder:onLoad()
             table.insert(positions, vec((x - 1) * tileSize, (y - 1) * tileSize))
         end
     end
-
-    self.node.modules.SpriteRenderer:setDirty(app.IMAGE:join(self.map, positions))
+    local dirty = app.IMAGE:join(self.map, positions)
+    self.node.modules.SpriteRenderer:setDirty(dirty)
+    self.node.modules.SpriteRenderer.size = vec(dirty:getWidth(), dirty:getHeight())
 end
 
 function TileMapBuilder:loadData(path)
