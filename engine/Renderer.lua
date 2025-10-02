@@ -16,13 +16,13 @@ function Renderer:init()
         if a.layer == 'world' then
             a_z = a.node.modules.SpriteRenderer.z_index
         elseif a.layer == 'ui' then
-            a_z = a.node.modules.UICanvas.z_index
+            a_z = a.node.modules.ui_Canvas.z_index
         end
 
         if b.layer == 'world' then
             b_z = b.node.modules.SpriteRenderer.z_index
         elseif b.layer == 'ui' then
-            b_z = b.node.modules.UICanvas.z_index
+            b_z = b.node.modules.ui_Canvas.z_index
         end
 
         return a_z < b_z
@@ -114,7 +114,7 @@ function Renderer:add(node)
     local layer = ''
     if node.modules.SpriteRenderer then
         layer = 'world'
-    elseif node.modules.UICanvas then
+    elseif node.modules.ui_Canvas then
         layer = 'ui'
     else return end
 

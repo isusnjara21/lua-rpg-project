@@ -14,6 +14,13 @@ function asset_ref:create_references()
         TileMapBuilder = require("common.modules.TileMapBuilder"),
         Animation = require("common.modules.Animation"),
         AnimationState = require("common.modules.AnimationState"),
+        UI = {
+            Canvas = require("common.modules.UI.Canvas"),
+            Label = require("common.modules.UI.Label"),
+            Image = require("common.modules.UI.Image"),
+            Button = require("common.modules.UI.Button"),
+        },
+        
         --RigidBody = require("common.modules.RigidBody"), -- not yet supported
     }
 
