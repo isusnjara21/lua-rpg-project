@@ -1,3 +1,10 @@
+--[[
+    TIME
+    Wrapper for deltaTime
+
+    allows slowing down or speeding up in-game time 
+--]]
+
 Time = Object:extend()
 
 function Time:init()

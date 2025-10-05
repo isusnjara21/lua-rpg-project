@@ -1,3 +1,6 @@
+--[[
+--]]
+
 Renderer = Object:extend()
 function Renderer:init()
     love.graphics.setDefaultFilter("nearest", "nearest")
@@ -6,8 +9,8 @@ function Renderer:init()
     self.DEBUG_SHAPES = {}
 
     self.__sort_diry = false
-    self.__virtual_screen = love.graphics.newCanvas(app.screen.x, app.screen.y)
-
+    self.__world_canvas = love.graphics.newCanvas(app.screen.x, app.screen.y)
+    self.__ui_canvas = love.graphics.newCanvas()
     self.cam_data = {}
 
     self.compare = function(a, b)
@@ -33,8 +36,12 @@ end
 function Renderer:draw_call()
     self:flushSort()
 
-    love.graphics.setCanvas(self.__virtual_screen)
+    love.graphics.setCanvas(self.__world_canvas)
     love.graphics.clear()
+    love.graphics.setCanvas(self.__ui_canvas)
+    love.graphics.clear()
+
+    love.graphics.setCanvas()
 
     local camPosition = app.camera.Transform:getAbsolutePosition()
     local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
@@ -62,16 +69,9 @@ function Renderer:draw_call()
         for _, obj in pairs(self.DRAWABLE_OBJECTS) do
             table.insert(nodes, obj.node)
         end
+        love.graphics.setCanvas(self.__world_canvas)
         app.ACTIVE_SCENE:dispatch(nodes, 'onDebugDraw', {})
-        --for _, node in pairs(self.DRAWABLE_OBJECTS) do
-            
-            --for _, module in pairs(node.modules) do
-            --    if module.onDebugDraw then
-            --        module:onDebugDraw()
-            --    end
-            --end
-        --end
-
+        love.graphics.setCanvas()
         for _, shape in pairs(self.DEBUG_SHAPES) do
             self:debug_draw(shape)
         end
@@ -88,7 +88,11 @@ function Renderer:draw_call()
     local offsetY = (sh - (app.screen.y * scale)) / 2
 
     love.graphics.push()
-    love.graphics.draw(self.__virtual_screen, offsetX, offsetY, 0, scale, scale)
+    love.graphics.draw(self.__world_canvas, offsetX, offsetY, 0, scale, scale)
+    love.graphics.pop()
+
+    love.graphics.push()
+    love.graphics.draw(self.__ui_canvas, 0, 0, 0, 1, 1)
     love.graphics.pop()
 
     self.cam_data = {}
@@ -163,6 +167,8 @@ end
 -- temp debug
 
 function Renderer:debug_draw(shape) -- VERY MUCH WIP
+    love.graphics.setCanvas(self.__world_canvas)
+
     local camPosition = app.camera.Transform:getAbsolutePosition()
     local camOffset = (app.screen / vec(2, 2)) * (1 / app.global_scale)
     local camRotation = app.camera.Transform.rotation
@@ -174,10 +180,14 @@ function Renderer:debug_draw(shape) -- VERY MUCH WIP
     love.graphics.circle("line", pos.x, pos.y, 8 * app.global_scale)
 
     love.graphics.setColor(1, 1, 1)
+
+    love.graphics.setCanvas()
 end
 
 function Renderer:draw_world(node)
     if not self:isVisible(node) then return end
+    love.graphics.setCanvas(self.__world_canvas)
+
     local worldPosition = node.modules.Transform:getAbsolutePosition()
     local position = util.WorldToScreen(worldPosition, self.cam_data.camPosition, self.cam_data.camRotation)
     local worldRotation = node.modules.Transform:getAbsoluteRotation()
@@ -188,7 +198,7 @@ function Renderer:draw_world(node)
     end
 
     local scale = node.modules.Transform:getAbsoluteScale()
-  
+
     love.graphics.draw(
         node.modules.SpriteRenderer.image,
         position.x,
@@ -199,6 +209,8 @@ function Renderer:draw_world(node)
         node.modules.SpriteRenderer.origin.x,
         node.modules.SpriteRenderer.origin.y
     )
+
+    love.graphics.setCanvas()
 end
 
 function Renderer:draw_ui()

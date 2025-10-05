@@ -1,3 +1,10 @@
+--[[
+    NODE
+    An object existing within a scene
+
+    Handles itself and communication from Scene to Module
+--]]
+
 Node = Object:extend()
 
 function Node:init()

@@ -1,6 +1,11 @@
-Transform = Module:extend()
+--[[
+    Transform module
+    Handles positioning, rotation and scaling of any Node in world-space
 
--- TO DO: make transform be relative to its parents Transform if parent has transform
+    stores a position, rotation and scale relative to its parent Node
+--]]
+
+Transform = Module:extend()
 
 Transform.__serialize = {
     position = {Type = 'Vector'},

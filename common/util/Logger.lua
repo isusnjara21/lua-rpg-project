@@ -1,3 +1,8 @@
+--[[
+    Logger utility
+    Handles writing out objects, tables and text into output buffers
+--]]
+
 Logger = {}
 function Logger.log(information)
     app.stdout = Logger.__write(information, app.stdout)

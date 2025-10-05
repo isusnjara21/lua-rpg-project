@@ -1,3 +1,8 @@
+--[[
+    MODULE
+    The state and logic attached to a Node
+--]]
+
 Module = Object:extend()
 
 function Module:init()

@@ -1,3 +1,9 @@
+--[[
+    SpriteRenderer module
+    Handles an image supplied to the Renderer and the interface to change the image
+
+    stores a Sprite object containing an image path, size, origin, z_index and rotation specific properties like static
+--]]
 
 SpriteRenderer = Module:extend()
 

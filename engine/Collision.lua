@@ -1,3 +1,8 @@
+--[[
+    COLLISION
+    Handles all collisions
+--]]
+
 Collision = Object:extend()
 function Collision:init()
     self.COLLIDERS = {}

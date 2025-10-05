@@ -1,3 +1,10 @@
+--[[
+    AssetReference
+
+    component for registering, creating and organizing a variety of objects
+    also listing predefined objects
+--]]
+
 asset_ref = Object:extend()
 
 function asset_ref:init()
@@ -14,14 +21,15 @@ function asset_ref:create_references()
         TileMapBuilder = require("common.modules.TileMapBuilder"),
         Animation = require("common.modules.Animation"),
         AnimationState = require("common.modules.AnimationState"),
-        UI = {
-            Canvas = require("common.modules.UI.Canvas"),
-            Label = require("common.modules.UI.Label"),
-            Image = require("common.modules.UI.Image"),
-            Button = require("common.modules.UI.Button"),
-        },
         
         --RigidBody = require("common.modules.RigidBody"), -- not yet supported
+    }
+
+    self.modules.UI = {
+        Canvas = require("common.modules.UI.ui_Canvas"),
+        Label = require("common.modules.UI.ui_Label"),
+        Images = require("common.modules.UI.ui_Image"),
+        Button = require("common.modules.UI.ui_Button"),
     }
 
     -- NODES

@@ -1,3 +1,11 @@
+--[[
+    AnimationState module
+    Used for handling the changing of animation sequences based on in-game state values.
+    
+    stores a set of variables to interface with for changing game-states,
+    is supplied lambda functions for checking when animation state should change.
+--]]
+
 AnimationState = Module:extend()
 
 function AnimationState:init()

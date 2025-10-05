@@ -1,3 +1,9 @@
+--[[
+    ANIMATOR
+    Handles all animations
+    (timings, animation switching, frame updates)
+--]]
+
 Animator = Object:extend()
 
 function Animator:init()

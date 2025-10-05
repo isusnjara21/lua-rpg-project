@@ -1,3 +1,12 @@
+--[[
+    Collider module
+    Handles interfacing with the COLLISION component
+
+    stores a Collision object
+    and is given layers, masks and tags for allowing/disallowing "collisions" between certain objects
+    and getting the information of the collision
+--]]
+
 Collider = Module:extend()
 
 local id_counter = 0

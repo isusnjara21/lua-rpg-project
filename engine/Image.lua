@@ -1,3 +1,10 @@
+--[[
+    IMAGE
+    
+--]]
+
+-- maybe shouldnt be engine side code?
+
 Image = Object:extend()
 
 function Image:init()

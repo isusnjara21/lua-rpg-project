@@ -1,3 +1,7 @@
+--[[
+    Main runtime of the engine
+--]]
+
 require "engine.Controller"
 require "engine.Renderer"
 require "engine.Node"

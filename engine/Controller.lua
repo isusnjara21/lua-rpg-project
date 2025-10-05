@@ -1,3 +1,8 @@
+--[[
+    CONTROLLER
+    Handles gathering from input devices
+--]]
+
 Controller = Object:extend()
 
 function Controller:init()

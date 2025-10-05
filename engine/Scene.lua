@@ -1,3 +1,10 @@
+--[[
+    SCENE
+    An organization of Nodes
+
+    handles communication from App to Node
+--]]
+
 Scene = Object:extend()
 
 function Scene:init(...)

@@ -1,3 +1,11 @@
+--[[
+    Animation module
+    Handles interfacing with the ANIMATOR component
+
+    stores an Animation object that is a collection of different sequences and their timings
+    and a sprite sheet of individual frames.
+--]]
+
 Animation = Module:extend()
 
 function Animation:init()
